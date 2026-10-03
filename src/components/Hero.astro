@@ -24,13 +24,28 @@ const { landing, landingZh } = config;
   >
     {landing.heroSubtitle}
   </p>
-  <a
-    href="#overview"
-    class="mt-10 inline-flex items-center justify-center rounded-md bg-accent px-7 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-colors duration-150 hover:opacity-90"
-    data-en={landing.heroCta}
-    data-zh={landingZh.heroCta}
-    data-i18n="hero-cta"
-  >
-    {landing.heroCta}
-  </a>
+  <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+    <!-- Primary CTA: GitHub -->
+    <a
+      href={landing.githubHref}
+      target="_blank"
+      rel="noopener noreferrer"
+      class="inline-flex items-center justify-center rounded-md bg-accent px-7 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-colors duration-150 hover:bg-accent/85"
+      data-en={landing.heroCtaPrimary}
+      data-zh={landingZh.heroCtaPrimary}
+      data-i18n="hero-cta-primary"
+    >
+      {landing.heroCtaPrimary}
+    </a>
+    <!-- Secondary CTA: About the project -->
+    <a
+      href="#overview"
+      class="inline-flex items-center justify-center rounded-md border border-border bg-muted/40 px-7 py-3 text-sm font-semibold text-foreground/90 transition-colors duration-150 hover:border-accent/50 hover:text-accent"
+      data-en={landing.heroCtaSecondary}
+      data-zh={landingZh.heroCtaSecondary}
+      data-i18n="hero-cta-secondary"
+    >
+      {landing.heroCtaSecondary}
+    </a>
+  </div>
 </section>
