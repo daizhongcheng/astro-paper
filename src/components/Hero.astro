@@ -6,10 +6,18 @@ const { landing, landingZh } = config;
 
 <section
   id="main-content"
-  class="landing-layout flex min-h-[78svh] flex-col items-center justify-center py-20 text-center"
+  class="landing-layout flex min-h-[82svh] flex-col items-center justify-center py-24 text-center"
 >
+  <p
+    class="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted/70 px-5 py-1.5 text-sm font-medium tracking-wide text-accent"
+    data-en={landing.heroEyebrow}
+    data-zh={landingZh.heroEyebrow}
+    data-i18n="hero-eyebrow"
+  >
+    {landing.heroEyebrow}
+  </p>
   <h1
-    class="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl"
+    class="max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-7xl"
     data-en={landing.heroTitle}
     data-zh={landingZh.heroTitle}
     data-i18n="hero-title"
@@ -17,20 +25,20 @@ const { landing, landingZh } = config;
     {landing.heroTitle}
   </h1>
   <p
-    class="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+    class="mt-8 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
     data-en={landing.heroSubtitle}
     data-zh={landingZh.heroSubtitle}
     data-i18n="hero-sub"
   >
     {landing.heroSubtitle}
   </p>
-  <div class="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:gap-4">
+  <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
     <!-- Primary CTA: GitHub -->
     <a
       href={landing.githubHref}
       target="_blank"
       rel="noopener noreferrer"
-      class="inline-flex items-center justify-center rounded-md bg-accent px-7 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-colors duration-150 hover:bg-accent/85"
+      class="inline-flex items-center justify-center rounded-lg bg-accent px-9 py-3.5 text-base font-semibold text-accent-foreground shadow-sm transition-colors duration-150 hover:bg-accent/85"
       data-en={landing.heroCtaPrimary}
       data-zh={landingZh.heroCtaPrimary}
       data-i18n="hero-cta-primary"
@@ -40,7 +48,7 @@ const { landing, landingZh } = config;
     <!-- Secondary CTA: About the project -->
     <a
       href="#overview"
-      class="inline-flex items-center justify-center rounded-md border border-border bg-muted/40 px-7 py-3 text-sm font-semibold text-foreground/90 transition-colors duration-150 hover:border-accent/50 hover:text-accent"
+      class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-9 py-3.5 text-base font-semibold text-foreground/90 transition-colors duration-150 hover:border-accent/50 hover:text-accent"
       data-en={landing.heroCtaSecondary}
       data-zh={landingZh.heroCtaSecondary}
       data-i18n="hero-cta-secondary"

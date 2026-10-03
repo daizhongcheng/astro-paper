@@ -140,6 +140,7 @@ interface LandingContent {
   /** Nav links (label + anchor), localised */
   nav: { label: string; href: string }[];
   /** Hero claim */
+  heroEyebrow: string;
   heroTitle: string;
   heroSubtitle: string;
   heroCtaPrimary: string;

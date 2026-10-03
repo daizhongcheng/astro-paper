@@ -2,6 +2,18 @@
 
 > 记录按时间倒序排列，最新改动在最上方。每次改动追加在文件顶部，不覆盖历史。
 
+## 2026-10-04 — `main`
+
+**改动概述：** 视觉方向再次调整：从深色硬核风改回**浅色大气科技风**。背景改柔和近白（`#fbfcfb`）、正文深墨绿（`#14221a`）、点缀低饱和品牌绿（`#2f7d4f`）；同时在布局上全面提升大气度——落地页容器从 `max-w-5xl`(1024px) 加宽至 `max-w-6xl`(1152px)，各区块纵向留白增至 `py-28`，Hero 放大为 `text-7xl` 大标题 + 顶部 eyebrow 标签 + 更舒展的双 CTA 按钮，Overview 改为「左标题右正文」两栏布局，产品卡片加大内边距与图标。
+
+**影响范围：** `src/styles/theme.css`（浅色色板）、`src/styles/global.css`（容器加宽）、`src/components/` 全部区块（Hero/Overview/Products/TechStack/GitHubCta/About/Footer/Navbar 增大留白与标题层级）、`astro-paper.config.ts` / `src/config.ts` / `src/types/config.ts`（新增 `heroEyebrow` 字段）。
+
+**是否涉及配置或依赖变更：** 是。
+
+- `src/styles/theme.css`：色板切回浅色，移除深色变量。
+- 新增 `LandingContent.heroEyebrow`（Hero 顶部小标签，en=`Dynamic × Physics` / zh=`动×相`）。
+- 破坏性变更：新增 `heroEyebrow` 字段，旧配置需补齐（缺省时组件读不到会显示空，建议补齐）。
+
 ## 2026-10-04 — `feature/dark-hardcore-theme`
 
 **改动概述：** 落地页视觉全面切换为「深色硬核极简科技风」。背景改为近黑深灰（GitHub Dark 基底 `#0d1117`），正文浅灰白，点缀色改用低饱和蓝紫（`#7aa2f7`），仅用于按钮 / 强调文字 / hover，无大面积渐变。移除深浅色切换开关，固定深色主题。Hero 增加双 CTA（访问 GitHub 主按钮 + 了解项目次按钮）。

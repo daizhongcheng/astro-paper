@@ -12,19 +12,20 @@
 }
 
 /*
- * DYNPHI — hard-core minimal tech theme (dark-first).
- * Background: near-black, muted dark grey (not pure black).
- * Accent: low-saturation blue / periwinkle. No gradients, no neon.
- * Pure CSS variables, single dark theme (no light/dark toggle).
+ * DYNPHI — clean, airy, engineer-grade light theme.
+ * Background: soft off-white (generous whitespace, not stark pure white).
+ * Foreground: deep ink-墨绿 for strong readability.
+ * Accent: low-saturation brand green. No gradients, no neon, no clutter.
+ * Single light theme tuned for an expansive, confident layout.
  */
 :root,
 [data-theme="dark"] {
-  --background: #0d1117; /* near-black, GitHub-dark base */
-  --foreground: #e6edf3; /* light grey-white body text */
-  --accent: #7aa2f7; /* low-saturation periwinkle blue */
-  --accent-foreground: #0d1117; /* text on accent */
-  --accent-soft: #2a3350; /* muted indigo for borders/hover tints */
-  --muted: #161b22; /* card / subtle panel background */
-  --muted-foreground: #8b949e; /* auxiliary grey text */
-  --border: #21262d; /* hairline border */
+  --background: #fbfcfb; /* off-white, airy canvas */
+  --foreground: #14221a; /* deep ink-墨绿 text */
+  --accent: #2f7d4f; /* low-saturation brand green */
+  --accent-foreground: #ffffff; /* text on accent */
+  --accent-soft: #e7f1ea; /* faint green tint for hover/highlight */
+  --muted: #f2f5f1; /* subtle panel background */
+  --muted-foreground: #5c6b61; /* auxiliary grey-green text */
+  --border: #e2e8e2; /* soft hairline border */
 }

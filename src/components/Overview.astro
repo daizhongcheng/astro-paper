@@ -5,26 +5,30 @@ const { landing, landingZh } = config;
 ---
 
 <section id="overview" class="border-t border-border bg-background/60">
-  <div class="landing-layout py-20">
-    <h2
-      class="text-2xl font-bold tracking-tight sm:text-3xl"
-      data-en={landing.overviewTitle}
-      data-zh={landingZh.overviewTitle}
-      data-i18n="overview-title"
-    >
-      {landing.overviewTitle}
-    </h2>
-    <div class="mt-6 space-y-4">
-      {landing.overviewParagraphs.map((p, i) => (
-        <p
-          class="max-w-3xl leading-relaxed text-muted-foreground"
-          data-en={p}
-          data-zh={landingZh.overviewParagraphs[i] ?? landingZh.overviewTitle}
-          data-i18n={`overview-p-${i}`}
+  <div class="landing-layout py-28">
+    <div class="grid gap-12 lg:grid-cols-12 lg:gap-16">
+      <div class="lg:col-span-4">
+        <h2
+          class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl"
+          data-en={landing.overviewTitle}
+          data-zh={landingZh.overviewTitle}
+          data-i18n="overview-title"
         >
-          {p}
-        </p>
-      ))}
+          {landing.overviewTitle}
+        </h2>
+      </div>
+      <div class="space-y-6 lg:col-span-8">
+        {landing.overviewParagraphs.map((p, i) => (
+          <p
+            class="max-w-3xl text-lg leading-relaxed text-muted-foreground"
+            data-en={p}
+            data-zh={landingZh.overviewParagraphs[i] ?? landingZh.overviewTitle}
+            data-i18n={`overview-p-${i}`}
+          >
+            {p}
+          </p>
+        ))}
+      </div>
     </div>
   </div>
 </section>

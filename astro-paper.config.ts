@@ -35,6 +35,7 @@ export default defineAstroPaperConfig({
   landing: {
     brand: "DYNPHI",
     phi: "φ",
+    heroEyebrow: "Dynamic × Physics",
     heroTitle: "The science of intelligent motion.",
     heroSubtitle:
       "DYNPHI is a physics-first AI company. We encode deterministic physical equations directly into our models — replacing statistical guessing with causally-grounded inference, so physics hallucination never happens in the first place.",
@@ -121,6 +122,7 @@ export default defineAstroPaperConfig({
       { label: "技术栈", href: "#tech-stack" },
       { label: "关于", href: "#about" },
     ],
+    heroEyebrow: "动×相",
     heroTitle: "让 AI 循物理而动",
     heroSubtitle:
       "DYNPHI 是一家以物理为先的 AI 公司。我们把确定性的物理方程直接编码进模型，用因果可推导、可校验的推理替代统计猜测，从源头杜绝物理幻觉。",

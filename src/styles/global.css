@@ -28,7 +28,7 @@
 
 /* Wider container for the single-page landing site */
 @utility max-w-landing {
-  @apply max-w-5xl;
+  @apply max-w-6xl;
 }
 
 @utility app-layout {
