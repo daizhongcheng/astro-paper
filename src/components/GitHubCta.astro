@@ -2,7 +2,7 @@
 import IconGithub from "@/assets/icons/socials/github.svg";
 import config from "@/config";
 
-const { landing } = config;
+const { landing, landingZh } = config;
 ---
 
 <section id="github" class="border-t border-border">
@@ -10,10 +10,20 @@ const { landing } = config;
     <div class="mx-auto inline-flex h-12 w-12 items-center justify-center rounded-full bg-muted text-accent">
       <IconGithub width={26} height={26} class="stroke-accent" />
     </div>
-    <h2 class="mt-5 text-2xl font-bold tracking-tight sm:text-3xl">
+    <h2
+      class="mt-5 text-2xl font-bold tracking-tight sm:text-3xl"
+      data-en={landing.githubTitle}
+      data-zh={landingZh.githubTitle}
+      data-i18n="github-title"
+    >
       {landing.githubTitle}
     </h2>
-    <p class="mx-auto mt-3 max-w-2xl text-muted-foreground">
+    <p
+      class="mx-auto mt-3 max-w-2xl text-muted-foreground"
+      data-en={landing.githubDescription}
+      data-zh={landingZh.githubDescription}
+      data-i18n="github-desc"
+    >
       {landing.githubDescription}
     </p>
     <a
@@ -21,6 +31,9 @@ const { landing } = config;
       target="_blank"
       rel="noopener noreferrer"
       class="mt-8 inline-flex items-center gap-2 rounded-md border border-accent/60 px-6 py-2.5 text-sm font-semibold text-accent transition-colors duration-150 hover:bg-accent hover:text-accent-foreground"
+      data-en={landing.githubCta}
+      data-zh={landingZh.githubCta}
+      data-i18n="github-cta"
     >
       <IconGithub width={20} height={20} />
       {landing.githubCta}

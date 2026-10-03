@@ -4,7 +4,7 @@ import IconX from "@/assets/icons/socials/x.svg";
 import IconMail from "@/assets/icons/socials/mail.svg";
 import config from "@/config";
 
-const { landing, site, socials } = config;
+const { landing, landingZh, site, socials } = config;
 const currentYear = new Date().getFullYear();
 
 const socialIcons = [
@@ -17,10 +17,18 @@ const socialIcons = [
 <footer class="mt-0 border-t border-border">
   <div class="landing-layout flex flex-col items-center justify-between gap-4 py-8 sm:flex-row">
     <div class="flex flex-col items-center gap-1 sm:items-start">
-      <span class="text-sm font-medium text-foreground/60">
-        {landing.brand} &#169; {currentYear} {site.title}
+      <span class="inline-flex items-center text-sm font-medium text-foreground/60">
+        <span class="font-serif text-lg text-accent" aria-hidden="true">{landing.phi}</span>
+        <span class="ms-1.5">{landing.brand} &#169; {currentYear} {site.title}</span>
       </span>
-      <span class="text-xs text-muted-foreground">{landing.footerTagline}</span>
+      <span
+        class="text-xs text-muted-foreground"
+        data-en={landing.footerTagline}
+        data-zh={landingZh.footerTagline}
+        data-i18n="footer-tagline"
+      >
+        {landing.footerTagline}
+      </span>
     </div>
     <div class="flex items-center gap-4">
       {socialIcons.map(s => (

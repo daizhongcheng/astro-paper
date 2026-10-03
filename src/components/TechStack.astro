@@ -1,19 +1,29 @@
 ---
 import config from "@/config";
 
-const { landing } = config;
+const { landing, landingZh } = config;
 ---
 
 <section id="tech-stack" class="border-t border-border bg-background/60">
   <div class="landing-layout py-20">
-    <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">
+    <h2
+      class="text-2xl font-bold tracking-tight sm:text-3xl"
+      data-en={landing.techStackTitle}
+      data-zh={landingZh.techStackTitle}
+      data-i18n="tech-title"
+    >
       {landing.techStackTitle}
     </h2>
-    <p class="mt-3 max-w-2xl text-muted-foreground">
+    <p
+      class="mt-3 max-w-2xl text-muted-foreground"
+      data-en={landing.techStackSubtitle}
+      data-zh={landingZh.techStackSubtitle}
+      data-i18n="tech-sub"
+    >
       {landing.techStackSubtitle}
     </p>
     <div class="mt-8 flex flex-wrap gap-3">
-      {landing.techStackTags.map(tag => (
+      {landing.techStackTags.map((tag) => (
         <span
           class="inline-flex items-center rounded-full border border-border bg-background px-4 py-1.5 text-sm font-medium text-foreground/90 transition-colors duration-150 hover:border-accent/50 hover:text-accent"
         >

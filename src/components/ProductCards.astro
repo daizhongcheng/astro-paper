@@ -1,7 +1,7 @@
 ---
 import config from "@/config";
 
-const { landing } = config;
+const { landing, landingZh } = config;
 
 const icons: Record<string, string> = {
   // Code - brackets
@@ -15,40 +15,70 @@ const icons: Record<string, string> = {
 
 <section id="products" class="border-t border-border">
   <div class="landing-layout py-20">
-    <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">
+    <h2
+      class="text-2xl font-bold tracking-tight sm:text-3xl"
+      data-en={landing.productsTitle}
+      data-zh={landingZh.productsTitle}
+      data-i18n="products-title"
+    >
       {landing.productsTitle}
     </h2>
-    <p class="mt-3 max-w-2xl text-muted-foreground">
+    <p
+      class="mt-3 max-w-2xl text-muted-foreground"
+      data-en={landing.productsSubtitle}
+      data-zh={landingZh.productsSubtitle}
+      data-i18n="products-sub"
+    >
       {landing.productsSubtitle}
     </p>
     <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
-      {landing.products.map(product => (
-        <article
-          id={product.icon === "code" ? "code-analysis" : product.icon === "physics" ? "physics-ai" : "agent"}
-          class="group flex flex-col rounded-lg border border-border bg-background/60 p-6 transition-colors duration-150 hover:border-accent/50 hover:bg-background"
-        >
-          <div class="flex items-center justify-between">
-            <span
-              class="inline-flex h-11 w-11 items-center justify-center rounded-md bg-muted text-accent"
-              aria-hidden="true"
-              set:html={icons[product.icon] ?? icons.code}
-            />
-            <span class="text-sm font-medium text-muted-foreground/60">
-              {product.index}
-            </span>
-          </div>
-          <h3 class="mt-5 text-lg font-semibold">{product.title}</h3>
-          <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
-            {product.description}
-          </p>
-          <a
-            href={product.linkHref}
-            class="mt-5 inline-flex items-center gap-1 text-sm font-medium text-accent underline decoration-dashed underline-offset-4 transition-colors duration-150 hover:opacity-80"
+      {landing.products.map((product, i) => {
+        const zh = landingZh.products[i] ?? product;
+        const anchorId =
+          product.icon === "code" ? "code-analysis" : product.icon === "physics" ? "physics-ai" : "agent";
+        return (
+          <article
+            id={anchorId}
+            class="group flex scroll-mt-24 flex-col rounded-lg border border-border bg-background/60 p-6 transition-colors duration-150 hover:border-accent/50 hover:bg-background"
           >
-            {product.linkLabel}
-          </a>
-        </article>
-      ))}
+            <div class="flex items-center justify-between">
+              <span
+                class="inline-flex h-11 w-11 items-center justify-center rounded-md bg-muted text-accent"
+                aria-hidden="true"
+                set:html={icons[product.icon] ?? icons.code}
+              />
+              <span class="text-sm font-medium text-muted-foreground/60">
+                {product.index}
+              </span>
+            </div>
+            <h3
+              class="mt-5 text-lg font-semibold"
+              data-en={product.title}
+              data-zh={zh.title}
+              data-i18n={`product-${i}-title`}
+            >
+              {product.title}
+            </h3>
+            <p
+              class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground"
+              data-en={product.description}
+              data-zh={zh.description}
+              data-i18n={`product-${i}-desc`}
+            >
+              {product.description}
+            </p>
+            <a
+              href={product.linkHref}
+              class="mt-5 inline-flex items-center gap-1 text-sm font-medium text-accent underline decoration-dashed underline-offset-4 transition-colors duration-150 hover:opacity-80"
+              data-en={product.linkLabel}
+              data-zh={zh.linkLabel}
+              data-i18n={`product-${i}-cta`}
+            >
+              {product.linkLabel}
+            </a>
+          </article>
+        );
+      })}
     </div>
   </div>
 </section>

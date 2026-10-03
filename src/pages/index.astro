@@ -10,7 +10,7 @@ import About from "@/components/About.astro";
 import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
-const { landing } = config;
+const { landing, landingZh } = config;
 ---
 
 <Layout
@@ -27,4 +27,31 @@ const { landing } = config;
     <About />
   </main>
   <Footer />
+
+  <script>
+    import { initI18n } from "@/utils/i18n";
+
+    // Simple document-title / description swap on language change.
+    const seo = {
+      en: {
+        title: `${document.title}`,
+        desc: "Physics-first AI company. DYNPHI encodes deterministic physical equations into models to eliminate physics hallucination at the source.",
+      },
+      zh: {
+        title: "DYNPHI — 物理优先的 AI 公司",
+        desc: "DYNPHI 是一家以物理为先的 AI 公司，把确定性的物理方程编码进模型，从源头消除物理幻觉。",
+      },
+    };
+
+    new MutationObserver(() => {
+      const lang = document.documentElement.dataset.lang === "zh" ? "zh" : "en";
+      document.title = seo[lang].title;
+      const m = document.querySelector('meta[name="description"]');
+      if (m) m.setAttribute("content", seo[lang].desc);
+      const og = document.querySelector('meta[property="og:description"]');
+      if (og) og.setAttribute("content", seo[lang].desc);
+    }).observe(document.documentElement, { attributes: true, attributeFilter: ["data-lang"] });
+
+    initI18n();
+  </script>
 </Layout>

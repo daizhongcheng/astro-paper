@@ -1,7 +1,7 @@
 ---
 import config from "@/config";
 
-const { landing } = config;
+const { landing, landingZh } = config;
 ---
 
 <section
@@ -10,17 +10,26 @@ const { landing } = config;
 >
   <h1
     class="max-w-3xl text-4xl font-extrabold leading-tight tracking-tight sm:text-6xl"
+    data-en={landing.heroTitle}
+    data-zh={landingZh.heroTitle}
+    data-i18n="hero-title"
   >
     {landing.heroTitle}
   </h1>
   <p
     class="mt-6 max-w-2xl text-base leading-relaxed text-muted-foreground sm:text-lg"
+    data-en={landing.heroSubtitle}
+    data-zh={landingZh.heroSubtitle}
+    data-i18n="hero-sub"
   >
     {landing.heroSubtitle}
   </p>
   <a
     href="#overview"
     class="mt-10 inline-flex items-center justify-center rounded-md bg-accent px-7 py-3 text-sm font-semibold text-accent-foreground shadow-sm transition-colors duration-150 hover:opacity-90"
+    data-en={landing.heroCta}
+    data-zh={landingZh.heroCta}
+    data-i18n="hero-cta"
   >
     {landing.heroCta}
   </a>
