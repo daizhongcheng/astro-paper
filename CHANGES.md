@@ -2,6 +2,19 @@
 
 > 记录按时间倒序排列，最新改动在最上方。每次改动追加在文件顶部，不覆盖历史。
 
+## 2026-10-04 \u2014 `main`\u200b\u200b
+
+**改动概述：** 三个产品卡片改为整卡可点，分别跳转到三套独立博客栏目；建立三套彼此隔离的博客系统（代码分析 / 物理 AI / Agent），各含列表页与文章详情页，用户可按栏目写文章。
+
+**新增功能：**
+- 三套独立博客栏目，路由 \`/blog/code-analysis\`、\`/blog/physics-ai\`、\`/blog/agent\`，各含栏目列表页与 \`\[slug\]\` 文章详情页。
+- 写文章方式：在 \`src/content/blog/<栏目>/\` 下新建 \`.md\` 文件（frontmatter 含 title / description / pubDatetime / tags）即自动进入对应栏目。
+- 首页三个产品卡片整卡可点 -> 对应栏目；CTA 文案改为「Read the blog / 进入专栏」。
+
+**影响范围：** \`src/content.config.ts\`（新增 3 个独立 collection）；\`src/utils/blogColumns.ts\`（栏目元信息与排序/slug 工具）；\`src/pages/blog/\`（动态列表页 + 详情页）；\`src/components/ProductCards.astro\`（整卡可点）；\`astro-paper.config.ts\`（产品跳转地址与 CTA）。
+
+**技术备注：** prerender 下 \`getStaticPaths\` 会被提取到独立 chunk，模块级私有函数（如排序、slug 计算）需移到可 import 的 util 模块，否则构建报 `xxx is not defined`。
+
 ## 2026-10-04 — `main`​​
 
 **改动概述：** 界面信息清理与产品卡片大气化。技术栈标签从模板默认的「Astro / Tailwind CSS / MDX / Content Collections」替换为 DYNPHI 真实底层技术「C++ / 物理仿真 / 编译器技术 / 大模型 / 智能 Agent」；GitHub 引导区去掉「本站 fork 自 AstroPaper 模板」的表述，改为开源理念文案；产品三卡片进一步提升大气度（更大内边距 `p-10`、圆角 `rounded-2xl`、图标 `h-14` + hover 填充动画、标题放大为 `text-2xl`、CTA 按钮化带箭头 + hover 上浮）。

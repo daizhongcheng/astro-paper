@@ -24,6 +24,39 @@ const posts = defineCollection({
     }),
 });
 
+// Three independent blog columns. Each maps to its own folder under
+// src/content/blog/<column>/, fully isolated from the others.
+const schemaForBlog = ({ image }: { image: () => any }) =>
+  z.object({
+    author: z.string().default(config.site.author),
+    pubDatetime: z.date(),
+    modDatetime: z.date().optional().nullable(),
+    title: z.string(),
+    featured: z.boolean().optional(),
+    draft: z.boolean().optional(),
+    tags: z.array(z.string()).default(["others"]),
+    ogImage: image().or(z.string()).optional(),
+    description: z.string(),
+    canonicalURL: z.string().optional(),
+    hideEditPost: z.boolean().optional(),
+    timezone: z.string().optional(),
+  });
+
+const codeAnalysisPosts = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/blog/code-analysis" }),
+  schema: schemaForBlog,
+});
+
+const physicsAiPosts = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/blog/physics-ai" }),
+  schema: schemaForBlog,
+});
+
+const agentPosts = defineCollection({
+  loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/blog/agent" }),
+  schema: schemaForBlog,
+});
+
 const pages = defineCollection({
   loader: glob({ pattern: "**/[^_]*.{md,mdx}", base: "./src/content/pages" }),
   schema: z.object({
@@ -34,4 +67,10 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, pages };
+export const collections = {
+  posts,
+  pages,
+  codeAnalysisPosts,
+  physicsAiPosts,
+  agentPosts,
+};

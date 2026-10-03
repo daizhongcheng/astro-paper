@@ -37,7 +37,8 @@ const icons: Record<string, string> = {
         const anchorId =
           product.icon === "code" ? "code-analysis" : product.icon === "physics" ? "physics-ai" : "agent";
         return (
-          <article
+          <a
+            href={product.linkHref}
             id={anchorId}
             class="group flex scroll-mt-24 flex-col rounded-2xl border border-border bg-background/70 p-10 shadow-sm transition-all duration-150 hover:-translate-y-1 hover:border-accent/50 hover:shadow-md"
           >
@@ -67,17 +68,16 @@ const icons: Record<string, string> = {
             >
               {product.description}
             </p>
-            <a
-              href={product.linkHref}
-              class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-colors duration-150 hover:gap-3 hover:text-accent/80"
+            <span
+              class="mt-8 inline-flex items-center gap-2 text-sm font-semibold text-accent transition-all duration-150 group-hover:gap-3"
               data-en={product.linkLabel}
               data-zh={zh.linkLabel}
               data-i18n={`product-${i}-cta`}
             >
               {product.linkLabel}
               <span aria-hidden="true">→</span>
-            </a>
-          </article>
+            </span>
+          </a>
         );
       })}
     </div>

@@ -1,0 +1,94 @@
+---
+import { getCollection, render } from "astro:content";
+import PostLayout from "@/layouts/PostLayout.astro";
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/components/Footer.astro";
+import { BLOG_COLUMNS, postSlug } from "@/utils/blogColumns";
+
+export async function getStaticPaths() {
+  const out: {
+    params: { column: string; slug: string };
+    props: { post: any; column: (typeof BLOG_COLUMNS)[number] };
+  }[] = [];
+
+  const byKey: Record<string, any[]> = {
+    codeAnalysisPosts: await getCollection("codeAnalysisPosts"),
+    physicsAiPosts: await getCollection("physicsAiPosts"),
+    agentPosts: await getCollection("agentPosts"),
+  };
+
+  for (const col of BLOG_COLUMNS) {
+    const posts = byKey[col.collectionKey] ?? [];
+    for (const p of posts) {
+      if (p.data?.draft) continue;
+      out.push({
+        params: { column: col.slug, slug: postSlug(p.id) },
+        props: { post: p, column: col },
+      });
+    }
+  }
+  return out;
+}
+
+const { post, column } = Astro.props;
+
+if (!column) {
+  throw new Error(`Unknown blog column: ${Astro.params.column}`);
+}
+
+const { Content } = await render(post);
+
+const fmt = (d: Date): string =>
+  new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  }).format(d);
+
+const backHref = `/blog/${column.slug}`;
+---
+
+<PostLayout
+  title={`${post.data.title} | DYNPHI`}
+  description={post.data.description}
+  ogImage={typeof post.data.ogImage === "string" ? post.data.ogImage : undefined}
+  pubDatetime={post.data.pubDatetime}
+  modDatetime={post.data.modDatetime ?? null}
+>
+  <Navbar />
+  <main id="main" class="flex-1">
+    <div class="landing-layout py-16">
+      <a
+        href={backHref}
+        class="inline-flex items-center gap-1.5 text-sm font-semibold text-accent hover:text-accent/80"
+        data-en="← Back to column"
+        data-zh="← 返回栏目"
+      >
+        ← <span data-en="Back to column" data-zh="返回栏目">Back to column</span>
+      </a>
+
+      <article class="mx-auto mt-10 max-w-3xl">
+        <h1 class="text-3xl font-bold tracking-tight text-foreground sm:text-4xl">
+          {post.data.title}
+        </h1>
+
+        <div class="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-muted-foreground">
+          <time datetime={post.data.pubDatetime.toISOString()}>
+            {fmt(post.data.pubDatetime)}
+          </time>
+          {post.data.modDatetime && (
+            <span>
+              (updated {fmt(post.data.modDatetime)}){" "}
+              <span data-en="(updated)" data-zh="(已更新)"></span>
+            </span>
+          )}
+        </div>
+
+        <div class="app-prose mt-10 w-full max-w-none">
+          <Content />
+        </div>
+      </article>
+    </div>
+  </main>
+  <Footer />
+</PostLayout>

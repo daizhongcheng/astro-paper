@@ -56,8 +56,8 @@ export default defineAstroPaperConfig({
         title: "Code Analysis",
         description:
           "Architecture breakdown, algorithm analysis and static/dynamic code analysis of open-source robotics projects such as ROS, producing structured technical deep-dives so the engineering and research community can quickly understand complex robotics codebases.",
-        linkLabel: "Learn more",
-        linkHref: "#code-analysis",
+        linkLabel: "Read the blog",
+        linkHref: "/blog/code-analysis",
         icon: "code",
       },
       {
@@ -65,8 +65,8 @@ export default defineAstroPaperConfig({
         title: "Physics AI",
         description:
           "First principles such as Newtonian mechanics encoded directly into the model, replacing statistical guessing with deterministic physical equations to eliminate physics hallucination at the source.",
-        linkLabel: "Learn more",
-        linkHref: "#physics-ai",
+        linkLabel: "Read the blog",
+        linkHref: "/blog/physics-ai",
         icon: "physics",
       },
       {
@@ -74,8 +74,8 @@ export default defineAstroPaperConfig({
         title: "Agent",
         description:
           "DYNPHI's proprietary AI Agent platform, with reserved API endpoints ready to plug into a dynamic backend and build autonomous agents for the physical world.",
-        linkLabel: "Learn more",
-        linkHref: "#agent",
+        linkLabel: "Read the blog",
+        linkHref: "/blog/agent",
         icon: "agent",
       },
     ],
@@ -141,8 +141,8 @@ export default defineAstroPaperConfig({
         title: "代码分析",
         description:
           "对 ROS 等开源机器人项目进行架构拆解、算法解析与静态/动态代码分析，输出结构化技术解读，帮助工程与科研社区快速读懂复杂机器人代码库。",
-        linkLabel: "了解更多",
-        linkHref: "#code-analysis",
+        linkLabel: "进入专栏",
+        linkHref: "/blog/code-analysis",
         icon: "code",
       },
       {
@@ -150,8 +150,8 @@ export default defineAstroPaperConfig({
         title: "物理 AI",
         description:
           "将牛顿力学等第一性原理直接编码进模型，用确定性物理方程替代统计猜测，从源头解决物理幻觉问题。",
-        linkLabel: "了解更多",
-        linkHref: "#physics-ai",
+        linkLabel: "进入专栏",
+        linkHref: "/blog/physics-ai",
         icon: "physics",
       },
       {
@@ -159,8 +159,8 @@ export default defineAstroPaperConfig({
         title: "Agent 平台",
         description:
           "DYNPHI 自研 AI Agent 平台，预留 API 接入点，可接入动态后端，构建面向物理世界的自主智能体。",
-        linkLabel: "了解更多",
-        linkHref: "#agent",
+        linkLabel: "进入专栏",
+        linkHref: "/blog/agent",
         icon: "agent",
       },
     ],

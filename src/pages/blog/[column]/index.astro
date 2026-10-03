@@ -1,0 +1,113 @@
+---
+import { getCollection } from "astro:content";
+import type { GetStaticPaths } from "astro";
+import Layout from "@/layouts/Layout.astro";
+import Navbar from "@/components/Navbar.astro";
+import Footer from "@/components/Footer.astro";
+import { BLOG_COLUMNS, sortBlogPosts } from "@/utils/blogColumns";
+import type { BlogColumn } from "@/utils/blogColumns";
+
+type AnyPost = any;
+
+export const getStaticPaths: GetStaticPaths = async () => {
+  const byKey: Record<BlogColumn["collectionKey"], AnyPost[]> = {
+    codeAnalysisPosts: await getCollection("codeAnalysisPosts"),
+    physicsAiPosts: await getCollection("physicsAiPosts"),
+    agentPosts: await getCollection("agentPosts"),
+  };
+  return BLOG_COLUMNS.map(col => ({
+    params: { column: col.slug },
+    props: { column: col, posts: sortBlogPosts(byKey[col.collectionKey]) },
+  }));
+};
+
+type Props = {
+  column: BlogColumn;
+  posts: AnyPost[];
+};
+
+const { column, posts } = Astro.props as Props;
+
+const slugOf = (id: string): string =>
+  id.replace(/\.(md|mdx)$/i, "").split("/").pop() ?? id;
+
+const fmt = (d: Date): string =>
+  new Intl.DateTimeFormat("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  }).format(d);
+---
+
+<Layout
+  title={`${column.title.en} | DYNPHI Blog`}
+  description={column.description.en}
+>
+  <Navbar />
+  <main id="main" class="flex-1">
+    <div class="border-b border-border">
+      <div class="landing-layout py-20">
+        <p class="text-sm font-semibold uppercase tracking-widest text-accent">
+          <span data-en={`Index ${column.index}`} data-zh={`栏目 ${column.index}`}>
+            Index {column.index}
+          </span>
+        </p>
+        <h1
+          class="mt-3 text-4xl font-bold tracking-tight sm:text-5xl"
+          data-en={column.title.en}
+          data-zh={column.title.zh}
+        >
+          {column.title.en}
+        </h1>
+        <p
+          class="mt-4 max-w-2xl text-muted-foreground"
+          data-en={column.description.en}
+          data-zh={column.description.zh}
+        >
+          {column.description.en}
+        </p>
+      </div>
+    </div>
+
+    <div class="landing-layout py-16">
+      {posts.length === 0 ? (
+        <p class="text-muted-foreground">
+          <span data-en="No articles yet. (coming soon)" data-zh="暂无文章。(即将上线)">No articles yet.</span>
+        </p>
+      ) : (
+        <ul class="grid gap-6">
+          {posts.map(post => {
+            const href = `/blog/${column.slug}/${slugOf(post.id)}`;
+            return (
+              <li>
+                <a
+                  href={href}
+                  class="group block rounded-2xl border border-border bg-background/70 p-6 transition-all duration-150 hover:-translate-y-0.5 hover:border-accent/50 hover:shadow-sm"
+                >
+                  <div class="flex items-center gap-x-3 text-sm text-muted-foreground">
+                    <time datetime={post.data.pubDatetime.toISOString()}>
+                      {fmt(post.data.pubDatetime)}
+                    </time>
+                  </div>
+                  <h2 class="mt-2 text-xl font-semibold tracking-tight text-foreground group-hover:text-accent">
+                    {post.data.title}
+                  </h2>
+                  <p class="mt-2 text-base leading-relaxed text-muted-foreground">
+                    {post.data.description}
+                  </p>
+                  <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-accent">
+                    <span data-en="Read article" data-zh="阅读文章">Read article</span>
+                    <span aria-hidden="true" class="transition-transform duration-150 group-hover:translate-x-0.5">
+                      →
+                    </span>
+                  </span>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  </main>
+  <Footer />
+</Layout>
