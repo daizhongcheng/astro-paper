@@ -1,0 +1,149 @@
+---
+import IconMenuDeep from "@/assets/icons/IconMenuDeep.svg";
+import IconX from "@/assets/icons/IconX.svg";
+import IconGithub from "@/assets/icons/socials/github.svg";
+import config from "@/config";
+
+const { landing, landingZh } = config;
+---
+
+<a
+  id="skip-to-content"
+  href="#main-content"
+  class="bg-background text-accent absolute inset-s-16 -top-full z-50 px-3 py-2 transition-all focus:top-4"
+  data-en={landing.skipToContent}
+  data-zh={landingZh.skipToContent}
+  data-i18n="skip"
+>
+  {landing.skipToContent}
+</a>
+
+<header class="sticky top-0 z-40 border-b border-border bg-background/85 backdrop-blur">
+  <nav
+    id="navbar"
+    class="landing-layout flex items-center justify-between py-4"
+    aria-label="Main navigation"
+    data-en={landing.navA11y}
+    data-zh={landingZh.navA11y}
+  >
+    <a href="#main-content" class="inline-flex items-center text-xl font-bold tracking-tight">
+      <span class="font-serif text-2xl text-accent" aria-hidden="true">{landing.phi}</span>
+      <span class="ms-2">{landing.brand}</span>
+    </a>
+
+    <!-- Language toggle -->
+    <div class="mx-4 inline-flex items-center gap-1 rounded-full border border-border bg-background p-0.5 text-xs font-semibold">
+      <button
+        type="button"
+        data-lang-toggle="en"
+        data-en="EN"
+        data-zh="中文"
+        aria-pressed="true"
+        class="rounded-full px-3 py-1 transition-colors duration-150 hover:text-accent"
+      >
+        EN
+      </button>
+    </div>
+
+    <!-- Mobile hamburger -->
+    <button
+      id="navbar-toggle"
+      class="focus-outline inline-flex items-center justify-center p-1 sm:hidden"
+      aria-label="Toggle menu"
+      aria-expanded="false"
+      aria-controls="navbar-menu"
+    >
+      <IconMenuDeep id="navbar-open" width={24} height={24} class="stroke-foreground" />
+      <IconX id="navbar-close" width={24} height={24} class="stroke-foreground hidden" />
+    </button>
+
+    <ul
+      id="navbar-menu"
+      class="hidden w-full flex-col gap-1 py-4 sm:flex sm:w-auto sm:flex-row sm:items-center sm:gap-7 sm:py-0"
+    >
+      {landing.nav.map((link, i) => (
+        <li>
+          <a
+            href={link.href}
+            class="block rounded px-1 py-2 text-sm font-medium text-foreground/80 transition-colors duration-150 hover:text-accent sm:py-0"
+            data-en={link.label}
+            data-zh={landingZh.nav[i]?.label ?? link.label}
+            data-i18n={`nav-${i}`}
+          >
+            {link.label}
+          </a>
+        </li>
+      ))}
+      <li class="sm:ms-1">
+        <a
+          href={landing.githubHref}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={landing.gitHubA11y}
+          data-en={landing.gitHubA11y}
+          data-zh={landingZh.gitHubA11y}
+          data-i18n="github"
+          title={landing.gitHubA11y}
+          class="inline-flex items-center gap-1.5 p-1 text-foreground/80 transition-colors duration-150 hover:text-accent"
+        >
+          <IconGithub width={22} height={22} class="stroke-foreground" />
+          <span class="sr-only">{landing.gitHubA11y}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>
+
+<script>
+  import { initI18n, setLanguage } from "@/utils/i18n";
+
+  function bindI18n() {
+    // Bind toggle buttons & init language.
+    document.querySelectorAll<HTMLElement>("[data-lang-toggle]").forEach(btn => {
+      if ((btn as any).__bound) return;
+      (btn as any).__bound = true;
+      btn.addEventListener("click", () => {
+        const lang = btn.getAttribute("data-lang-toggle") === "zh" ? "zh" : "en";
+        setLanguage(lang);
+      });
+    });
+    initI18n();
+  }
+
+  function bindToggle() {
+    const btn = document.getElementById("navbar-toggle");
+    const menu = document.getElementById("navbar-menu");
+    const openIcon = document.getElementById("navbar-open");
+    const closeIcon = document.getElementById("navbar-close");
+    if (!btn || !menu || !openIcon || !closeIcon) return;
+
+    const toggle = () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      const next = !open;
+      btn.setAttribute("aria-expanded", String(next));
+      menu.classList.toggle("hidden", !next);
+      menu.classList.toggle("flex", next);
+      openIcon.classList.toggle("hidden", next);
+      closeIcon.classList.toggle("hidden", !next);
+    };
+
+    btn.addEventListener("click", toggle);
+    menu.querySelectorAll("a").forEach(a => a.addEventListener("click", () => {
+      const open = btn.getAttribute("aria-expanded") === "true";
+      if (open) {
+        btn.setAttribute("aria-expanded", "false");
+        menu.classList.add("hidden");
+        menu.classList.remove("flex");
+        openIcon.classList.remove("hidden");
+        closeIcon.classList.add("hidden");
+      }
+    }));
+  }
+
+  bindI18n();
+  bindToggle();
+  document.addEventListener("astro:after-swap", () => {
+    bindI18n();
+    bindToggle();
+  });
+</script>

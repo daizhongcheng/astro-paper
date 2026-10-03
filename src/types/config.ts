@@ -123,6 +123,74 @@ export interface ResolvedAstroPaperConfig {
   features: Required<FeaturesConfig>;
   socials: SocialLink[];
   shareLinks: ShareLink[];
+  landing: LandingContent;
+  /** Chinese (zh) variant of the landing copy, same shape as `landing` */
+  landingZh: LandingContent;
+}
+
+/**
+ * Landing page content for the single-page marketing site.
+ * Centralised copy keeps text out of component templates.
+ */
+interface LandingContent {
+  /** Brand name shown in the navbar / footer */
+  brand: string;
+  /** Greek letter phi mark used as the brand glyph (U+03C6) */
+  phi: string;
+  /** Nav links (label + anchor), localised */
+  nav: { label: string; href: string }[];
+  /** Hero claim */
+  heroTitle: string;
+  heroSubtitle: string;
+  heroCta: string;
+  /** Overview section */
+  overviewTitle: string;
+  overviewParagraphs: string[];
+  /** Products */
+  productsTitle: string;
+  productsSubtitle: string;
+  products: {
+    index: string;
+    title: string;
+    description: string;
+    linkLabel: string;
+    linkHref: string;
+    icon: string;
+  }[];
+  /** Tech stack */
+  techStackTitle: string;
+  techStackSubtitle: string;
+  techStackTags: string[];
+  /** GitHub CTA */
+  githubTitle: string;
+  githubDescription: string;
+  githubCta: string;
+  githubHref: string;
+  /** About */
+  aboutTitle: string;
+  aboutParagraphs: string[];
+  /** Footer / contact */
+  footerTagline: string;
+  contactLabel: string;
+  contactHref: string;
+  /** Accessibility strings */
+  skipToContent: string;
+  navA11y: string;
+  gitHubA11y: string;
+}
+
+interface AstroPaperConfig {
+  site: SiteConfig;
+  posts?: PostsConfig;
+  features?: FeaturesConfig;
+  /** Social profile links shown in header/footer */
+  socials?: SocialLink[];
+  /** Share links shown on post detail pages */
+  shareLinks?: ShareLink[];
+  /** DYNPHI landing page copy — English (single-page marketing site) */
+  landing?: LandingContent;
+  /** DYNPHI landing page copy — Chinese (mirrors `landing` shape) */
+  landingZh?: LandingContent;
 }
 
 /**

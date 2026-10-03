@@ -1,30 +1,48 @@
 ---
-import type { HTMLAttributes } from "astro/types";
-import Socials from "./Socials.astro";
-import { useTranslations } from "@/i18n";
+import IconGithub from "@/assets/icons/socials/github.svg";
+import IconX from "@/assets/icons/socials/x.svg";
+import IconMail from "@/assets/icons/socials/mail.svg";
+import config from "@/config";
 
-type Props = {
-  noMarginTop?: boolean;
-} & HTMLAttributes<"footer">;
-
-const { noMarginTop = false, class: className, ...attrs } = Astro.props;
-
-const t = useTranslations(Astro.currentLocale);
+const { landing, landingZh, site, socials } = config;
 const currentYear = new Date().getFullYear();
+
+const socialIcons = [
+  { icon: IconGithub, label: "GitHub", href: socials.find(s => s.name === "github")?.url ?? "" },
+  { icon: IconX, label: "X", href: socials.find(s => s.name === "x")?.url ?? "" },
+  { icon: IconMail, label: "Email", href: socials.find(s => s.name === "mail")?.url ?? "" },
+];
 ---
 
-<footer
-  class:list={["app-layout", { "mt-auto": !noMarginTop }, className]}
-  {...attrs}
->
-  <div
-    class="border-border flex flex-col items-center justify-between border-t py-6 sm:flex-row-reverse sm:py-4"
-  >
-    <Socials />
-    <div class="my-2 flex flex-col items-center whitespace-nowrap sm:flex-row">
-      <span>{t.footer.copyright} &#169; {currentYear}</span>
-      <span class="hidden sm:inline">&nbsp;|&nbsp;</span>
-      <span>{t.footer.allRightsReserved}</span>
+<footer class="mt-0 border-t border-border">
+  <div class="landing-layout flex flex-col items-center justify-between gap-4 py-8 sm:flex-row">
+    <div class="flex flex-col items-center gap-1 sm:items-start">
+      <span class="inline-flex items-center text-sm font-medium text-foreground/60">
+        <span class="font-serif text-lg text-accent" aria-hidden="true">{landing.phi}</span>
+        <span class="ms-1.5">{landing.brand} &#169; {currentYear} {site.title}</span>
+      </span>
+      <span
+        class="text-xs text-muted-foreground"
+        data-en={landing.footerTagline}
+        data-zh={landingZh.footerTagline}
+        data-i18n="footer-tagline"
+      >
+        {landing.footerTagline}
+      </span>
+    </div>
+    <div class="flex items-center gap-4">
+      {socialIcons.map(s => (
+        <a
+          href={s.href}
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label={s.label}
+          title={s.label}
+          class="text-muted-foreground transition-colors duration-150 hover:text-accent"
+        >
+          <s.icon width={20} height={20} />
+        </a>
+      ))}
     </div>
   </div>
 </footer>
