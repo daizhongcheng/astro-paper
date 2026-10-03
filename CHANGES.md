@@ -2,6 +2,25 @@
 
 > 记录按时间倒序排列，最新改动在最上方。每次改动追加在文件顶部，不覆盖历史。
 
+## 2026-10-04 — `feature/dynphi-homepage`
+
+**改动概述：** 落地页品牌与中英双语文案改造。以希腊字母 φ（Georgia 衬线小写）作为品牌图形标（导航/页脚/ favicon 统一），更新 Hero 主 slogan 为 "The science of intelligent motion."、Overview / About / 产品全文案为正式英文版，并新增完整中文版本落地页文案；实现客户端中英切换（按浏览器语言/IP 判断默认语言 + 导航切换按钮，文案仍集中在 config）；替换正式 OG 图为白绿 φ 品牌视觉。
+
+**影响范围：** 全部落地页组件（Navbar / Hero / Overview / ProductCards / TechStack / GitHubCta / About / Footer / index）改为 `data-i18n` 双语渲染；新增 `src/utils/i18n.ts` 语言切换逻辑；`public/default-og.jpg` 替换为正式 OG 图；新增 `public/logo-phi.svg`、`public/favicon.svg`（φ 图标）；`scripts/copy-pagefind.cjs` 代替 POSIX `cp -r` 保证跨平台构建。
+
+**是否涉及配置或依赖变更：** 是。
+
+- `astro-paper.config.ts` / `src/config.ts` / `src/types/config.ts`：`landing` 结构调整并新增 `landingZh`（中文文案副本），`LandingContent` 增加 `phi` / `nav` / 无障碍字符串字段。
+- `package.json`：`build` 脚本中 POSIX `cp -r` 改为 `node scripts/copy-pagefind.cjs`（Windows 兼容）。
+- 破坏性变更：`LandingContent` 字段结构扩展（新增 `phi`、`nav`、`skipToContent`、`navA11y`、`gitHubA11y`），使用旧配置结构的项目需补齐以上字段。
+
+### 提交明细
+
+| 提交短哈希 | 提交信息 | 说明 |
+| --- | --- | --- |
+
+---
+
 ## 2026-10-03 — `feature/dynphi-homepage`
 
 **改动概述：** 将 AstroPaper 博客模板改造为 DYNPHI 公司官网单页落地页。
