@@ -2,6 +2,19 @@
 
 > 记录按时间倒序排列，最新改动在最上方。每次改动追加在文件顶部，不覆盖历史。
 
+## 2026-10-04 — `feature/dark-hardcore-theme`
+
+**改动概述：** 落地页视觉全面切换为「深色硬核极简科技风」。背景改为近黑深灰（GitHub Dark 基底 `#0d1117`），正文浅灰白，点缀色改用低饱和蓝紫（`#7aa2f7`），仅用于按钮 / 强调文字 / hover，无大面积渐变。移除深浅色切换开关，固定深色主题。Hero 增加双 CTA（访问 GitHub 主按钮 + 了解项目次按钮）。
+
+**影响范围：** `src/styles/theme.css`（色板全量切换 + 单个深色主题变量）；`src/layouts/Layout.astro` 与 `src/scripts/theme.ts`（FOUC 脚本与主题逻辑改为始终强制深色，仅同步 theme-color）；`src/components/Hero.astro`（双 CTA 按钮）；`astro-paper.config.ts` / `src/config.ts` / `src/types/config.ts`（`heroCta` 拆分为 `heroCtaPrimary` / `heroCtaSecondary`，en/zh 各一组）。
+
+**是否涉及配置或依赖变更：** 是。
+
+- `src/styles/theme.css`：色板改为深色科技风；`:root, [data-theme="dark"]` 定义单个深色变量集。
+- `src/layouts/Layout.astro` / `src/scripts/theme.ts`：移除浅色分支与切换逻辑，固定 `data-theme="dark"`（不再提供深浅切换开关）。
+- `heroCta` 拆分为 `heroCtaPrimary`（访问 GitHub / 访问 GitHub）与 `heroCtaSecondary`（Learn More / 了解项目）。
+- 破坏性变更：`LandingContent.heroCta` 更名拆分为 `heroCtaPrimary` / `heroCtaSecondary`；使用旧配置的项目需替换字段名。
+
 ## 2026-10-04 — `feature/dynphi-homepage`
 
 **改动概述：** 落地页品牌与中英双语文案改造。以希腊字母 φ（Georgia 衬线小写）作为品牌图形标（导航/页脚/ favicon 统一），更新 Hero 主 slogan 为 "The science of intelligent motion."、Overview / About / 产品全文案为正式英文版，并新增完整中文版本落地页文案；实现客户端中英切换（按浏览器语言/IP 判断默认语言 + 导航切换按钮，文案仍集中在 config）；替换正式 OG 图为白绿 φ 品牌视觉。

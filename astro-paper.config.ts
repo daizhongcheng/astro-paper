@@ -38,7 +38,8 @@ export default defineAstroPaperConfig({
     heroTitle: "The science of intelligent motion.",
     heroSubtitle:
       "DYNPHI is a physics-first AI company. We encode deterministic physical equations directly into our models — replacing statistical guessing with causally-grounded inference, so physics hallucination never happens in the first place.",
-    heroCta: "Explore",
+    heroCtaPrimary: "View GitHub",
+    heroCtaSecondary: "Learn More",
     overviewTitle: "The Soul of Physics AI",
     overviewParagraphs: [
       "DYNPHI stands for Dynamic × Physics. Most LLMs predict by statistical association — and when it comes to physical laws, they confidently fabricate: physics hallucination. We fix this at the source by encoding first principles like Newtonian mechanics directly into the model architecture, forcing inference to run under deterministic physical constraints rather than guessing across a data distribution.",
@@ -123,7 +124,8 @@ export default defineAstroPaperConfig({
     heroTitle: "让 AI 循物理而动",
     heroSubtitle:
       "DYNPHI 是一家以物理为先的 AI 公司。我们把确定性的物理方程直接编码进模型，用因果可推导、可校验的推理替代统计猜测，从源头杜绝物理幻觉。",
-    heroCta: "开始探索",
+    heroCtaPrimary: "访问 GitHub",
+    heroCtaSecondary: "了解项目",
     overviewTitle: "物理 AI 的灵魂",
     overviewParagraphs: [
       "DYNPHI（Dynamic × Physics）专注于物理 AI。绝大多数大模型靠统计关联做预测，一旦涉及物理规律，常常『一本正经地编造』——这就是物理幻觉。我们从源头改变它：把牛顿力学等第一性原理直接编码进模型架构，让推理在确定性物理方程的约束下进行，而不是在数据分布上瞎猜。",

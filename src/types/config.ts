@@ -142,7 +142,8 @@ interface LandingContent {
   /** Hero claim */
   heroTitle: string;
   heroSubtitle: string;
-  heroCta: string;
+  heroCtaPrimary: string;
+  heroCtaSecondary: string;
   /** Overview section */
   overviewTitle: string;
   overviewParagraphs: string[];
