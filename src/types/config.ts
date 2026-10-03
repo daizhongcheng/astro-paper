@@ -123,6 +123,62 @@ export interface ResolvedAstroPaperConfig {
   features: Required<FeaturesConfig>;
   socials: SocialLink[];
   shareLinks: ShareLink[];
+  landing: LandingContent;
+}
+
+/**
+ * Landing page content for the single-page marketing site.
+ * Centralised copy keeps text out of component templates.
+ */
+interface LandingContent {
+  /** Brand name shown in the navbar / footer */
+  brand: string;
+  /** Hero claim */
+  heroTitle: string;
+  heroSubtitle: string;
+  heroCta: string;
+  /** Overview section */
+  overviewTitle: string;
+  overviewParagraphs: string[];
+  /** Products */
+  productsTitle: string;
+  productsSubtitle: string;
+  products: {
+    index: string;
+    title: string;
+    description: string;
+    linkLabel: string;
+    linkHref: string;
+    icon: string;
+  }[];
+  /** Tech stack */
+  techStackTitle: string;
+  techStackSubtitle: string;
+  techStackTags: string[];
+  /** GitHub CTA */
+  githubTitle: string;
+  githubDescription: string;
+  githubCta: string;
+  githubHref: string;
+  /** About */
+  aboutTitle: string;
+  aboutParagraphs: string[];
+  /** Footer / contact */
+  footerTagline: string;
+  contactLabel: string;
+  contactHref: string;
+}
+
+interface AstroPaperConfig {
+  site: SiteConfig;
+  posts?: PostsConfig;
+  features?: FeaturesConfig;
+  /** Social profile links shown in header/footer */
+  socials?: SocialLink[];
+  /** Share links shown on post detail pages */
+  shareLinks?: ShareLink[];
+  /** DYNPHI landing page copy (single-page marketing site) */
+  landing?: LandingContent;
 }
 
 /**

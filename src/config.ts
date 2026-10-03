@@ -36,6 +36,31 @@ const config: ResolvedAstroPaperConfig = {
   },
   socials: userConfig.socials ?? [],
   shareLinks: userConfig.shareLinks ?? [],
+  landing: userConfig.landing ?? {
+    // Safe fallback so `config.landing` is never undefined at runtime.
+    // Copy lives in `astro-paper.config.ts`.
+    brand: "DYNPHI",
+    heroTitle: "",
+    heroSubtitle: "",
+    heroCta: "",
+    overviewTitle: "",
+    overviewParagraphs: [],
+    productsTitle: "",
+    productsSubtitle: "",
+    products: [],
+    techStackTitle: "",
+    techStackSubtitle: "",
+    techStackTags: [],
+    githubTitle: "",
+    githubDescription: "",
+    githubCta: "",
+    githubHref: "",
+    aboutTitle: "",
+    aboutParagraphs: [],
+    footerTagline: "",
+    contactLabel: "",
+    contactHref: "",
+  },
 };
 
 export default config;
