@@ -124,6 +124,8 @@ export interface ResolvedAstroPaperConfig {
   socials: SocialLink[];
   shareLinks: ShareLink[];
   landing: LandingContent;
+  /** Chinese (zh) variant of the landing copy, same shape as `landing` */
+  landingZh: LandingContent;
 }
 
 /**
@@ -133,6 +135,10 @@ export interface ResolvedAstroPaperConfig {
 interface LandingContent {
   /** Brand name shown in the navbar / footer */
   brand: string;
+  /** Greek letter phi mark used as the brand glyph (U+03C6) */
+  phi: string;
+  /** Nav links (label + anchor), localised */
+  nav: { label: string; href: string }[];
   /** Hero claim */
   heroTitle: string;
   heroSubtitle: string;
@@ -167,6 +173,10 @@ interface LandingContent {
   footerTagline: string;
   contactLabel: string;
   contactHref: string;
+  /** Accessibility strings */
+  skipToContent: string;
+  navA11y: string;
+  gitHubA11y: string;
 }
 
 interface AstroPaperConfig {
@@ -177,8 +187,10 @@ interface AstroPaperConfig {
   socials?: SocialLink[];
   /** Share links shown on post detail pages */
   shareLinks?: ShareLink[];
-  /** DYNPHI landing page copy (single-page marketing site) */
+  /** DYNPHI landing page copy — English (single-page marketing site) */
   landing?: LandingContent;
+  /** DYNPHI landing page copy — Chinese (mirrors `landing` shape) */
+  landingZh?: LandingContent;
 }
 
 /**
