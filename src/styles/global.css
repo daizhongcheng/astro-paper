@@ -26,8 +26,17 @@
   @apply max-w-3xl;
 }
 
+/* Wider container for the single-page landing site */
+@utility max-w-landing {
+  @apply max-w-5xl;
+}
+
 @utility app-layout {
   @apply max-w-app mx-auto w-full px-4;
+}
+
+@utility landing-layout {
+  @apply max-w-landing mx-auto w-full px-4;
 }
 
 @utility active-nav {
