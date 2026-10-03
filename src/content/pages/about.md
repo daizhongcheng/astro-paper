@@ -1,37 +1,20 @@
 ---
 title: "About"
-description: "A bit about me and this blog."
+description: "DYNPHI — a physics-first AI company encoding first principles into models."
 ---
 
-AstroPaper is a minimal, accessible and SEO-friendly blog theme built with [Astro](https://astro.build/) and [Tailwind CSS](https://tailwindcss.com/).
+# About DYNPHI
 
-![Astro Paper](@/assets/images/astropaper-og.jpg)
+DYNPHI（Dynamic + Physics）是一家物理 AI 公司。我们的使命是把确定性的物理规律编码进 AI 的「直觉」里——用第一性原理替代统计猜测，从源头消除物理幻觉。
 
-AstroPaper provides a solid foundation for blogs, or even portfolios\_ with full markdown support, built-in dark mode, and a clean layout that works out-of-the-box.
+## Why physics-first?
 
-The blog posts in this theme also serve as guides, docs or example articles\_ making AstroPaper a flexible starting point for your next content-driven site.
+大多数模型在数据分布上做统计关联，遇到物理规律时常常产生看似合理、实则错误的输出。DYNPHI 的答案很直接：把牛顿力学等确定性物理方程直接编码进模型架构，让每一次推理都被物理定律约束，可追踪、可校验、甚至可反演。
 
-## Features
+## Open by default
 
-AstroPaper comes with a set of useful features that make content publishing easy and effective:
+我们相信真正的智能是因果与规律的产物，而不是概率的堆砌。因此代码向社区开源，方法向同行公开，问题始终从物理本身出发。
 
-- SEO-friendly
-- Fast performance
-- Light & dark mode
-- Highly customizable
-- Organizable blog posts
-- Responsive & accessible
-- Static search with [PageFind](https://pagefind.app/)
-- Automatic social image generation
+## Get in touch
 
-and so much more.
-
-## Show your support
-
-If you like [AstroPaper](https://github.com/satnaing/astro-paper), consider giving it a star ⭐️.
-
-Found a bug 🐛 or have an improvement ✨ in mind? Feel free to open an [issue](https://github.com/satnaing/astro-paper/issues), submit a [pull request](https://github.com/satnaing/astro-paper/pulls) or start a [discussion](https://github.com/satnaing/astro-paper/discussions).
-
-If you find this theme helpful, you can also [sponsor me on GitHub](https://github.com/sponsors/satnaing) or [buy me a coffee](https://buymeacoffee.com/satnaing) to show your support — every penny counts.
-
-Kyay zuu! 🙏🏼
+欢迎通过 [hello@dynphi.com](mailto:hello@dynphi.com) 与我们联系。
