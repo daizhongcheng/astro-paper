@@ -1,0 +1,54 @@
+---
+import config from "@/config";
+
+const { landing } = config;
+
+const icons: Record<string, string> = {
+  // Code - brackets
+  code: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M7 8l-4 4l4 4"/><path d="M17 8l4 4l-4 4"/><path d="M14 4l-4 16"/></svg>`,
+  // Physics - atom orbit
+  physics: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 12m-2 0a2 2 0 1 0 4 0a2 2 0 1 0 -4 0"/><path d="M12 9a2 2 0 0 0 -3.5 -1.5a6 6 0 0 0 7 0a2 2 0 0 0 -3.5 1.5"/><path d="M10.5 12a2 2 0 0 0 0 2a6 6 0 0 0 0 -2"/><path d="M13.5 12a2 2 0 0 0 0 2a6 6 0 0 0 0 -2"/><path d="M12 12m-9 0a9 9 0 1 0 18 0a9 9 0 1 0 -18 0"/></svg>`,
+  // Agent - robot / cpu
+  agent: `<svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"/><path d="M12 9a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M6 9a3 3 0 1 0 6 0a3 3 0 0 0 -6 0"/><path d="M9 21h6"/><path d="M3 12h18"/><path d="M9 9h6l3 -4"/><path d="M9 9l-3 -4"/><path d="M9 21v-5"/><path d="M15 21v-5"/></svg>`,
+};
+---
+
+<section id="products" class="border-t border-border">
+  <div class="landing-layout py-20">
+    <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">
+      {landing.productsTitle}
+    </h2>
+    <p class="mt-3 max-w-2xl text-muted-foreground">
+      {landing.productsSubtitle}
+    </p>
+    <div class="mt-10 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {landing.products.map(product => (
+        <article
+          id={product.icon === "code" ? "code-analysis" : product.icon === "physics" ? "physics-ai" : "agent"}
+          class="group flex flex-col rounded-lg border border-border bg-background/60 p-6 transition-colors duration-150 hover:border-accent/50 hover:bg-background"
+        >
+          <div class="flex items-center justify-between">
+            <span
+              class="inline-flex h-11 w-11 items-center justify-center rounded-md bg-muted text-accent"
+              aria-hidden="true"
+              set:html={icons[product.icon] ?? icons.code}
+            />
+            <span class="text-sm font-medium text-muted-foreground/60">
+              {product.index}
+            </span>
+          </div>
+          <h3 class="mt-5 text-lg font-semibold">{product.title}</h3>
+          <p class="mt-2 flex-1 text-sm leading-relaxed text-muted-foreground">
+            {product.description}
+          </p>
+          <a
+            href={product.linkHref}
+            class="mt-5 inline-flex items-center gap-1 text-sm font-medium text-accent underline decoration-dashed underline-offset-4 transition-colors duration-150 hover:opacity-80"
+          >
+            {product.linkLabel}
+          </a>
+        </article>
+      ))}
+    </div>
+  </div>
+</section>

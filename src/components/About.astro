@@ -1,0 +1,26 @@
+---
+import config from "@/config";
+
+const { landing } = config;
+---
+
+<section id="about" class="border-t border-border bg-background/60">
+  <div class="landing-layout py-20">
+    <h2 class="text-2xl font-bold tracking-tight sm:text-3xl">
+      {landing.aboutTitle}
+    </h2>
+    <div class="mt-6 space-y-4">
+      {landing.aboutParagraphs.map(p => (
+        <p class="max-w-3xl leading-relaxed text-muted-foreground">{p}</p>
+      ))}
+    </div>
+    <div class="mt-8">
+      <a
+        href={landing.contactHref}
+        class="inline-flex items-center gap-2 text-sm font-medium text-accent underline decoration-dashed underline-offset-4 transition-colors duration-150 hover:opacity-80"
+      >
+        {landing.contactLabel}
+      </a>
+    </div>
+  </div>
+</section>
