@@ -2,6 +2,14 @@
 
 > 记录按时间倒序排列，最新改动在最上方。每次改动追加在文件顶部，不覆盖历史。
 
+## 2026-10-04 — `main`​​
+
+**改动概述：** 界面信息清理与产品卡片大气化。技术栈标签从模板默认的「Astro / Tailwind CSS / MDX / Content Collections」替换为 DYNPHI 真实底层技术「C++ / 物理仿真 / 编译器技术 / 大模型 / 智能 Agent」；GitHub 引导区去掉「本站 fork 自 AstroPaper 模板」的表述，改为开源理念文案；产品三卡片进一步提升大气度（更大内边距 `p-10`、圆角 `rounded-2xl`、图标 `h-14` + hover 填充动画、标题放大为 `text-2xl`、CTA 按钮化带箭头 + hover 上浮）。
+
+**影响范围：** `astro-paper.config.ts`（techStackTags / githubDescription 的 en、zh 文案）；`src/components/ProductCards.astro`（卡片样式强化）。
+
+**是否涉及配置或依赖变更：** 仅文案与样式调整，无破坏性变更。
+
 ## 2026-10-04 — `main`
 
 **改动概述：** 视觉方向再次调整：从深色硬核风改回**浅色大气科技风**。背景改柔和近白（`#fbfcfb`）、正文深墨绿（`#14221a`）、点缀低饱和品牌绿（`#2f7d4f`）；同时在布局上全面提升大气度——落地页容器从 `max-w-5xl`(1024px) 加宽至 `max-w-6xl`(1152px)，各区块纵向留白增至 `py-28`，Hero 放大为 `text-7xl` 大标题 + 顶部 eyebrow 标签 + 更舒展的双 CTA 按钮，Overview 改为「左标题右正文」两栏布局，产品卡片加大内边距与图标。
