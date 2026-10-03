@@ -90,21 +90,16 @@ const rssHref = getRelativeLocaleUrl(
     }
 
     <!--
-      Inline FOUC-prevention script: sets data-theme on <html> before
-      the browser paints. Runs synchronously, no defer/async.
+      Inline FOUC-prevention script: DYNPHI is a fixed dark theme (no toggle),
+      so we always force data-theme="dark" before the browser paints.
+      Runs synchronously, no defer/async.
     -->
     <script is:inline>
       (function () {
-        const stored = localStorage.getItem("theme");
-        const prefersDark = window.matchMedia(
-          "(prefers-color-scheme: dark)"
-        ).matches;
-        const theme = stored ?? (prefersDark ? "dark" : "light");
         const root = document.firstElementChild;
-        root?.setAttribute("data-theme", theme);
-        root?.classList.toggle("dark", theme === "dark");
-        // Expose value so theme.ts can skip re-detection.
-        window.__theme = { value: theme };
+        root?.setAttribute("data-theme", "dark");
+        root?.classList.add("dark");
+        window.__theme = { value: "dark" };
       })();
     </script>
 
