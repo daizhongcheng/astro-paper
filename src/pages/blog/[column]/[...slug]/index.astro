@@ -55,7 +55,7 @@ const backHref = `/blog/${column.slug}`;
   pubDatetime={post.data.pubDatetime}
   modDatetime={post.data.modDatetime ?? null}
 >
-  <Navbar />
+  <Navbar landingNav={false} />
   <main id="main" class="flex-1">
     <div class="landing-layout py-16">
       <a
