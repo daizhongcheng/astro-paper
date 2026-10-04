@@ -208,7 +208,7 @@ export default defineAstroPaperConfig({
     heroEyebrow: "编译 × 物理",
     heroTitle: "编译物理律，承载智能体",
     heroSubtitle:
-      "设计期编译物理，运行期驾驭任意躯体。",
+      "我们重构了整条技术栈——模型、硬件边界与反馈回路。",
     heroCtaPrimary: "阅读故事",
     heroCtaSecondary: "访问 GitHub",
     overviewTitle: "物理 AI 的灵魂",
@@ -259,7 +259,7 @@ export default defineAstroPaperConfig({
     aboutParagraphs: [
       "DYNPHI 是一家物理 AI 公司——Dynamic 与 Physics 的结合。使命是把确定性的物理规律，编码进 AI 的『直觉』里。",
       "我们崇尚开放与第一性原理：代码向社区开源，方法向同行公开。",
-      "一颗大脑，适配每一副躯体。",
+      "一套把硬件视为一等公民的架构。",
     ],
     footerTagline: "编译物理律，承载智能体。",
     contactLabel: "联系我们",

@@ -3,112 +3,150 @@ import Layout from "@/layouts/Layout.astro";
 import Navbar from "@/components/Navbar.astro";
 import Footer from "@/components/Footer.astro";
 
-interface Chapter {
-  no: string;
-  title: { en: string; zh: string };
-  slogan: { en: string; zh: string };
-  body: { en: string[]; zh: string[] };
-  points: { en: string[]; zh: string[] };
-}
+interface Tri { en: string; zh: string }
 
-/** Vision-page copy. Kept local (not in global config) so this standalone
- *  white-paper module stays independently evolvable. All nodes are localised
- *  via the existing `data-i18n` client mechanism. */
 const vision = {
-  eyebrow: { en: "TECHNICAL VISION", zh: "技术愿景" },
-  title: { en: "From Compiler to Embodied Intelligence", zh: "从编译器，到具身智能" },
+  eyebrow: { en: "ARCHITECTURE DEEP DIVE", zh: "架构深度解析" },
+  title: { en: "A Re-architecture of the Embodied Stack", zh: "一次对具身技术栈的重构" },
   tagline: {
-    en: "Compile the laws. Update the weights. Move any body.",
-    zh: "编译定律，动态权重，驾驭万体。",
+    en: "Design-time laws. Run-time weights. One architecture for the physical world.",
+    zh: "设计期定律 · 运行期权重 · 面向物理世界的统一架构。",
   },
   intro: {
-    en: [
-      "DYNPHI begins as a compiler: turning physical laws into hard constraints inside the model. But the story does not end at design time. To act in the physical world, a model must understand its own body, close the loop with what actually happened, and stretch one intelligence across every mechanical form.",
-      "Three ideas carry that extension — an AI-native hardware abstraction, a closed-loop world model, and run-time adaptive weights.",
-    ],
-    zh: [
-      "DYNPHI 起步于一台编译器：把物理定律变成模型内部的硬约束。但故事并不止于设计期。要真正在物理世界行动，模型必须理解自己的身体、与世界实际发生的结果闭环、把同一份智能扩展到每一种机械形态。",
-      "三大思想承载这一延伸——AI 原生的硬件抽象、闭环世界模型，以及运行期自适应权重。",
-    ],
+    en: "DYNPHI is not a feature set. It is a set of architectural decisions — about where the laws of physics live, where the hardware boundary sits, and how a model closes the loop with what actually happened. Each decision below explains why we designed it this way, what fundamental problem it solves, and how it differs from the established stack.",
+    zh: "DYNPHI 不是一组功能，而是一组架构决策——关于物理定律活在何处、硬件边界落在哪里、模型如何与实际发生的结果闭环。下面的每一条，都会说明我们为何这样设计、解决了什么根本问题、又与既有技术栈有何本质区别。",
   },
-  archTitle: { en: "The Architecture at a Glance", zh: "总体架构一瞥" },
-  archLegend: {
-    en: "Design-time compiles the laws in; run-time adapts one brain to any body.",
-    zh: "设计期把定律编译进来，运行期让同一大脑适配任意躯体。",
+  compare: {
+    title: { en: "How the Stack Differs", zh: "与既有技术栈的差异" },
+    subtitle: {
+      en: "Three architectures, one lens: where does the design assume the intelligence to be wrong?",
+      zh: "三种架构，同一视角：设计在哪个环节预设了智能可能出错？",
+    },
+    cols: [
+      { en: "Traditional Robotics Stack", zh: "传统机器人软件栈" },
+      { en: "End-to-End LLM", zh: "纯端到端大模型" },
+      { en: "DYNPHI", zh: "DYNPHI" },
+    ],
+    rows: [
+      {
+        dim: { en: "Hardware semantics", zh: "硬件语义" },
+        trad: { en: "Scattered protocols & driver wrappers", zh: "分散协议与驱动封装" },
+        e2e: { en: "No hardware interface", zh: "无硬件接口" },
+        dyn: { en: "Industrial protocols → tensor semantic space, native to LLMs", zh: "工业协议 → 张量语义空间，对大模型原生友好" },
+      },
+      {
+        dim: { en: "Control feedback", zh: "控制反馈" },
+        trad: { en: "Separate control loop, never a model input", zh: "独立控制回路，从不进入模型" },
+        e2e: { en: "Effectively unavailable", zh: "基本不可用" },
+        dyn: { en: "Error tokenised, on par with perception", zh: "误差 Token 化，与感知同级" },
+      },
+      {
+        dim: { en: "Model ↔ hardware", zh: "模型-硬件关系" },
+        trad: { en: "Per-morphology retraining", zh: "按形态单独重训" },
+        e2e: { en: "Single fixed morphology", zh: "单一固定形态" },
+        dyn: { en: "Run-time weight switch from the hardware descriptor", zh: "运行时按硬件描述符切换权重" },
+      },
+      {
+        dim: { en: "Safety constraints", zh: "安全约束" },
+        trad: { en: "Application patches / PLC sa-side", zh: "应用层补丁 / PLC 侧" },
+        e2e: { en: "Prompt-dependent", zh: "依赖提示词" },
+        dyn: { en: "Architecture-level safety engine, compiled in", zh: "架构级安全约束引擎，编译进接口" },
+      },
+      {
+        dim: { en: "Causal understanding", zh: "因果理解" },
+        trad: { en: "Modular, fragmented", zh: "模块割裂" },
+        e2e: { en: "Statistical association", zh: "统计关联" },
+        dyn: { en: "Closed-loop world model with physical causality", zh: "具物理因果的闭环世界模型" },
+      },
+    ],
   },
   chapters: [
     {
       no: "01",
       title: { en: "The AI-Native HAL", zh: "面向 AI 原生的硬件抽象层" },
-      slogan: { en: "One tensor contract for every actuator", zh: "一张张量契约，接管所有执行器" },
-      body: {
-        en: [
-          "Servo, VFD and IO boards speak decades of proprietary industrial protocols. An embodied model cannot reason about the world when every actuator has a different dialect.",
-          "The AI-Native HAL flattens them into a single tensor interface: every joint, every drive, every sensor becomes a typed tensor — with safety constraints compiled in as first-class invariants, not runtime checks bolted on later.",
-        ],
-        zh: [
-          "伺服、变频、IO 板卡说着几十年积累下来的私有工业协议。当每个执行器都讲不同方言时，具身模型无法真正理解世界。",
-          "AI 原生 HAL 把它们摊平成一张张量接口：每个关节、每个驱动、每个传感器都变成一个类型化的张量——安全约束作为一等不变量直接编译进去，而非事后附加的运行时检查。",
-        ],
+      slogan: { en: "Tensor semantics native to the model — not protocol translation", zh: "模型原生的张量语义——而非协议转换" },
+      why: {
+        en: "Decades of proprietary industrial protocols — EtherCAT, CAN, servo, IO — have left every actuator speaking a different dialect. When each actuator speaks its own private tongue, an embodied model cannot truly reason about the world. The decision is to stop translating for the model and instead re-express the hardware itself in the model's native terms.",
+        zh: "几十年来，伺服、变频与 IO 板卡各自固守着一套私有工业协议。当每个执行器都说着互不相通的方言时，具身模型无法真正理解世界——所以决策的核心是：不再替模型做翻译，而是把硬件本身重建为模型的母语。",
       },
-      points: {
-        en: ["Single tensor contract across actuators", "Safety invariants compiled in, not bolted on"],
-        zh: ["跨执行器的统一张量契约", "安全不变量被编译进接口，而非事后附加"],
+      solves: {
+        en: "Bridging a decades-old gap between mature industrial control and frontier models, with physical safety compiled in as a first-class invariant — not a runtime patch.",
+        zh: "弥合成熟工业控制与前沿模型之间长达数十年的鸿沟，并把物理安全作为一等不变量编译进接口——而非运行时补丁。",
       },
+      vs: {
+        en: "Not a wrapper or a protocol-conversion layer. EtherCAT / CAN / servo / IO become tensors the model reads and writes directly, under an architecture-level safety engine.",
+        zh: "不是封装、也不是协议转换层。EtherCAT / CAN / 伺服 / IO 变成模型可直接读写的张量，并被架构级安全引擎约束。",
+      },
+      code: ["// ai-native hal", "type Actuator {", "  servo :: Tensor<3>", "  vfd   :: Tensor<3>", "  io    :: Tensor<N>", "}", "compile(safety_invariants)"],
+      noteIdx: -1,
     },
     {
       no: "02",
       title: { en: "The Closed-Loop World Model", zh: "全链路闭环世界模型" },
-      slogan: { en: "The world talks back — error is an input", zh: "世界会回响——误差即输入" },
-      body: {
-        en: [
-          "Classic perception feeds the model the world; it never tells the model what its own actions actually did. So every step restarts from zero uncertainty.",
-          "We tokenise external perception, body proprioception and control-feedback error into one continuous input stream. The model learns in the loop: what I intended, what I did, what the world returned.",
-        ],
-        zh: [
-          "传统感知只把世界喂给模型，却从不告诉模型它自己的动作到底产生了什么。于是每一步都从零不确定重新开始。",
-          "我们把外部感知、本体感知与控制反馈误差一并 Token 化，汇成一条连续的输入流。模型在闭环中学习：我想做什么、我做了什么、世界回馈了什么。",
-        ],
+      slogan: { en: "Control error, raised to a token-level input", zh: "控制误差，提升为 Token 级输入" },
+      why: {
+        en: "A serial perception–plan–control pipeline discards the result of every action it takes. The design decision is to stop splitting the loop and treat acting as part of knowing.",
+        zh: "串行的感知-规划-控制流水线，会丢弃每一次动作的实际结果。决策的核心：不再割裂这条回路，而是把「行动」纳入「认知」本身。",
       },
-      points: {
-        en: ["Perception + proprioception + error, all tokenised", "Self-correcting inference inside the loop"],
-        zh: ["感知 + 本体 + 误差，全部 Token 化", "在闭环内部自校正的推理"],
+      solves: {
+        en: "Giving the world model physical causality — it learns what its own actions did, not just what the world looks like. Error becomes a first-class input on par with vision and proprioception.",
+        zh: "让世界模型具备物理因果——它学习的是自己动作的后果，而不只是世界长什么样。误差成为与视觉、本体同级的一等输入。",
       },
+      vs: {
+        en: "Not a perception-prediction model. Perception, proprioception and control-feedback error are fused into one tokenised stream — an architectural merge of sensing and control.",
+        zh: "不是视觉预测器。感知、本体与控制反馈误差被融合进同一条 Token 流——这是感知与控制的一次架构级融合。",
+      },
+      code: ["// closed-loop world model", "state = [", "  perception,     // the world", "  proprioception, // the body", "  error,          // what came back", "].toStream()", "model(state).self_correct()"],
+      noteIdx: -1,
     },
     {
       no: "03",
-      title: { en: "One Brain, Many Bodies", zh: "一脑多体" },
-      slogan: { en: "Run-time adaptive weights", zh: "运行期动态权重适配" },
-      body: {
-        en: [
-          "A car, a quadruped, a humanoid and a drone share kinematic reality but not morphology. Re-training per body is slow and brittle.",
-          "Through MoE, hyper-networks and adapters, one base model switches its effective weights at run time from the hardware descriptor it sees. The same brain pilots any body — because the controllers already know the physics; they only need to know the shape.",
-        ],
-        zh: [
-          "车、四足、人形与无人机共享同样的运动学现实，却形态各异。为每种躯体单独重训，既慢又脆。",
-          "借助 MoE、超网络与 Adapter，同一个基础模型在运行时根据它所看到的硬件描述，动态切换有效权重。同一颗大脑驾驭任意躯体——因为控制器本已通晓物理，只需知道形态。",
-        ],
+      title: { en: "Run-time Dynamic Weight Adaptation", zh: "运行期动态权重适配" },
+      slogan: { en: "Hardware-independence as an architecture primitive", zh: "硬件无关性作为架构原语" },
+      why: {
+        en: "Heterogeneous physical entities should be natively supported, not retrained one at a time. The design decision is to make hardware adaptation a runtime mechanism, not a build-time ritual.",
+        zh: "异构物理实体应当被原生支持，而非逐个重训。决策的核心：把对硬件的适应做成运行期机制，而不是构建期的仪式。",
       },
-      points: {
-        en: ["MoE / hyper-network / adapter switching", "One base model, every mechanical form"],
-        zh: ["MoE / 超网络 / Adapter 动态切换", "一个基础模型，覆盖所有机械形态"],
+      solves: {
+        en: "MoE, hyper-networks and adapters are infrastructure here — the base model switches its effective weights from the hardware descriptor it sees, automatically, with no retraining and no manual loading.",
+        zh: "在这里，MoE、超网络与 Adapter 是基础设施——基础模型根据它看到的硬件描述符自动切换有效权重，无需重训、无需手动加载。",
       },
+      vs: {
+        en: "Not an optional trick. Weight switching is a runtime behaviour driven by the descriptor. Across car, quadruped, humanoid and drone — one brain, many bodies — this is a natural consequence, not the design goal.",
+        zh: "不是可选的技巧。权重切换是由描述符驱动的运行时行为。车、四足、人形与无人机——一脑多体——不过是这一架构能力的自然结果，而非设计目标。",
+      },
+      code: ["// run-time adaptive weights", "weights = moe(", "  hw_descriptor,  // car | humanoid", "                   // dog | drone", ")", "base.move(weights, at_runtime)"],
+      noteIdx: 0,
     },
-  ] as Chapter[],
+  ] as {
+    no: string;
+    title: Tri; slogan: Tri; why: Tri; solves: Tri; vs: Tri;
+    code: string[];
+    noteIdx: number;
+  }[],
+  verify: {
+    title: { en: "Validation Path", zh: "技术验证路径" },
+    subtitle: {
+      en: "Engineering discipline: what is verified today, and where real hardware is still required.",
+      zh: "工程严谨性：今天已验证了什么，哪里仍需真机验证。",
+    },
+    sim: {
+      en: ["Physical-constraint compilation", "DYNPHI compiler pipeline", "Tensor semantic mapping (HAL)", "Error-tokenised closed loop (simulation)"],
+      zh: ["物理约束编译", "DYNPHI 编译器流水线", "张量语义映射（HAL）", "误差 Token 化闭环（仿真）"],
+    },
+    pending: {
+      en: ["Real servo / VFD deployment", "Run-time weight switch on hardware", "Safety-engine fallback on real machines"],
+      zh: ["真实伺服 / 变频部署", "硬件上运行期权重切换", "安全引擎在真机上的回退"],
+    },
+  },
   cta: {
-    en: [
-      "This is where the compiler meets the body. Explore how we analyse, compile and deploy against every surface.",
-      "Back to the homepage",
-    ],
-    zh: [
-      "这就是编译器与躯体相遇的地方。去看看我们如何面向每一个表面做分析、编译与部署。",
-      "返回首页",
-    ],
+    en: ["Explore how each decision is applied across our analysis, compile and deploy surfaces.", "Back to the homepage"],
+    zh: ["去看看每一条设计决策，如何落地在我们的分析、编译与部署三面。", "返回首页"],
   },
 };
 ---
 
-<Layout title="Vision | DYNPHI" description="DYNPHI technical vision — AI-native hardware abstraction, a closed-loop world model, and one brain for many bodies.">
+<Layout title="Architecture Deep Dive | DYNPHI" description="DYNPHI architecture deep dive — three original design decisions: an AI-native HAL, a closed-loop world model, and run-time adaptive weights.">
   <Navbar />
 
   <!-- Header -->
@@ -116,231 +154,168 @@ const vision = {
     <div class="landing-layout mx-auto flex max-w-4xl flex-col items-center">
       <p
         class="breathing-badge inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-5 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-cyan-400"
-        data-en={vision.eyebrow.en}
-        data-zh={vision.eyebrow.zh}
-        data-i18n="v-eyebrow"
+        data-en={vision.eyebrow.en} data-zh={vision.eyebrow.zh} data-i18n="v-eyebrow"
       >
         <span class="inline-block size-1.5 rounded-full bg-cyan-400" aria-hidden="true"></span>
         {vision.eyebrow.en}
       </p>
-      <h1
-        class="mt-8 text-4xl font-extrabold tracking-tight text-white sm:text-6xl"
-        data-en={vision.title.en}
-        data-zh={vision.title.zh}
-        data-i18n="v-title"
-      >
-        {vision.title.en}
-      </h1>
-      <p
-        class="mt-6 text-xl font-medium tracking-tight text-cyan-300"
-        data-en={vision.tagline.en}
-        data-zh={vision.tagline.zh}
-        data-i18n="v-tagline"
-      >
-        {vision.tagline.en}
-      </p>
-      <p
-        class="mt-8 max-w-2xl text-base leading-relaxed text-zinc-400"
-        data-en={vision.intro.en.join(" ")}
-        data-zh={vision.intro.zh.join(" ")}
-        data-i18n="v-intro"
-      >
-        {vision.intro.en.join(" ")}
-      </p>
+      <h1 class="mt-8 text-4xl font-extrabold tracking-tight text-white sm:text-6xl"
+        data-en={vision.title.en} data-zh={vision.title.zh} data-i18n="v-title">{vision.title.en}</h1>
+      <p class="mt-6 text-xl font-medium tracking-tight text-cyan-300"
+        data-en={vision.tagline.en} data-zh={vision.tagline.zh} data-i18n="v-tagline">{vision.tagline.en}</p>
+      <p class="mt-8 max-w-2xl text-base leading-relaxed text-zinc-400"
+        data-en={vision.intro.en} data-zh={vision.intro.zh} data-i18n="v-intro">{vision.intro.en}</p>
     </div>
   </section>
 
-  <!-- Architecture overview -->
-  <section id="arch" class="scroll-mt-24 px-6 pb-28">
+  <!-- Architecture comparison -->
+  <section id="compare" class="scroll-mt-24 px-6 pb-20">
     <div class="landing-layout">
       <div class="reveal mx-auto max-w-2xl text-center">
-        <p
-          class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400"
-          data-en={vision.archTitle.en}
-          data-zh={vision.archTitle.zh}
-          data-i18n="v-arch-title"
-        >
-          {vision.archTitle.en}
-        </p>
-        <h2
-          class="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl"
-          data-en={vision.archLegend.en}
-          data-zh={vision.archLegend.zh}
-          data-i18n="v-arch-legend"
-        >
-          {vision.archLegend.en}
-        </h2>
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          data-en={vision.compare.title.en} data-zh={vision.compare.title.zh} data-i18n="v-cmp-title">{vision.compare.title.en}</h2>
+        <p class="mt-4 text-zinc-400"
+          data-en={vision.compare.subtitle.en} data-zh={vision.compare.subtitle.zh} data-i18n="v-cmp-sub">{vision.compare.subtitle.en}</p>
       </div>
 
-      <!-- Architecture diagram (pure HTML/Tailwind, zero-dependency) -->
-      <div class="reveal mt-16 rounded-2xl border border-white/5 bg-white/[0.02] p-6 sm:p-10">
-        <!-- Input stream -->
-        <div class="grid gap-3 text-center sm:grid-cols-3">
-          {["External Perception", "Body Proprioception", "Control Error"].map((s, i) => (
-            <div class="rounded-xl border border-white/5 bg-[#0c0c0f] px-4 py-4">
-              <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500">input</p>
-              <p class="mt-1 text-sm font-medium text-zinc-200">{s}</p>
+      <!-- Comparison matrix (pure CSS Grid, responsive) -->
+      <div class="reveal mt-12 overflow-hidden rounded-2xl border border-white/5">
+        <div class="grid md:grid-cols-[200px_1fr_1fr_1fr]">
+          <!-- header row -->
+          <div class="hidden border-b border-white/5 bg-white/[0.02] px-4 py-3 md:block"></div>
+          {vision.compare.cols.map((c, ci) => (
+            <div
+              class={[
+                "border-b border-white/5 px-4 py-3 text-sm font-semibold ",
+                ci === 2 ? "border-cyan-400/30 bg-cyan-400/[0.06] text-cyan-300" : "bg-white/[0.02] text-zinc-300",
+              ].join("")}
+            >
+              <span data-en={c.en} data-zh={c.zh} data-i18n={`v-cmp-h-${ci}`}>{c.en}</span>
+              {ci === 2 && <span class="ml-2 rounded bg-cyan-400/15 px-1.5 py-0.5 font-mono text-[10px] uppercase tracking-wider text-cyan-300">original</span>}
             </div>
           ))}
-        </div>
-
-        <!-- Arrow down -->
-        <div class="my-3 flex justify-center text-cyan-400/70" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m0 0l-6-6m6 6l6-6" /></svg>
-        </div>
-
-        <!-- Model core -->
-        <div class="rounded-xl border border-cyan-400/25 bg-cyan-400/[0.04] px-4 py-5 text-center">
-          <p class="font-mono text-[11px] uppercase tracking-widest text-cyan-400/80">tokenised stream → base model</p>
-          <p class="mt-1 text-sm font-semibold text-white">One Brain · MoE / Hyper-network / Adapter</p>
-          <p class="mt-1 font-mono text-[11px] text-zinc-500">run-time weights selected from the hardware descriptor</p>
-        </div>
-
-        <!-- Arrow down -->
-        <div class="my-3 flex justify-center text-cyan-400/70" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m0 0l-6-6m6 6l6-6" /></svg>
-        </div>
-
-        <!-- HAL -->
-        <div class="rounded-xl border border-white/5 bg-[#0c0c0f] px-4 py-4 text-center">
-          <p class="font-mono text-[11px] uppercase tracking-widest text-emerald-400/80">ai-native hal</p>
-          <p class="mt-1 text-sm font-medium text-zinc-200">Tensor interface · safety invariants compiled in</p>
-        </div>
-
-        <!-- Arrow down -->
-        <div class="my-3 flex justify-center text-cyan-400/70" aria-hidden="true">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 4v16m0 0l-6-6m6 6l6-6" /></svg>
-        </div>
-
-        <!-- Bodies -->
-        <div class="grid gap-3 text-center sm:grid-cols-4">
-          {["Car", "Quadruped", "Humanoid", "Drone"].map(s => (
-            <div class="rounded-xl border border-white/5 bg-white/[0.02] px-4 py-4">
-              <p class="text-sm font-medium text-zinc-200">{s}</p>
-            </div>
+          {/* body rows */}
+          {vision.compare.rows.map((r, ri) => (
+            <>
+              <div class="hidden items-center border-b border-white/5 bg-white/[0.02] px-4 py-3 font-mono text-xs uppercase tracking-wider text-zinc-500 md:flex"
+                ><span data-en={r.dim.en} data-zh={r.dim.zh} data-i18n={`v-cmp-d-${ri}`}>{r.dim.en}</span></div>
+              {[r.trad, r.e2e, r.dyn].map((cell, ci) => (
+                <div
+                  class={[
+                    "px-4 py-3 text-sm leading-relaxed border-b border-white/5 ",
+                    ci === 2 ? "border-cyan-400/20 bg-cyan-400/[0.04] text-zinc-100" : "text-zinc-400",
+                  ].join("")}
+                >
+                  <span class="mb-1 block text-[11px] md:hidden">
+                    <span class="text-zinc-500" data-en={r.dim.en} data-zh={r.dim.zh} data-i18n={`v-cmp-dm-${ri}`}>{r.dim.en}</span>
+                  </span>
+                  <span data-en={cell.en} data-zh={cell.zh} data-i18n={`v-cmp-${ri}-${ci}`}>{cell.en}</span>
+                </div>
+              ))}
+            </>
           ))}
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Three chapters -->
-  <section id="pillars" class="px-6 pb-28">
+  <!-- Three design decisions -->
+  <section id="pillars" class="px-6 pb-20">
     <div class="landing-layout flex flex-col gap-20">
-      {vision.chapters.map((ch, ci) => (
-        <article
-          class="reveal grid items-start gap-10 md:grid-cols-2 md:gap-14"
-        >
-          <!-- Left: text -->
-          <div class={ci % 2 === 1 ? "md:order-2" : ""}>
-            <div class="flex items-baseline gap-4">
-              <span class="font-mono text-5xl font-extrabold tracking-tight text-cyan-400/30">{ch.no}</span>
-              <div>
-                <h2
-                  class="text-2xl font-bold tracking-tight text-white sm:text-3xl"
-                  data-en={ch.title.en}
-                  data-zh={ch.title.zh}
-                  data-i18n={`v-ch-t-${ci}`}
-                >
-                  {ch.title.en}
-                </h2>
-                <p
-                  class="mt-1 text-sm font-medium text-cyan-300"
-                  data-en={ch.slogan.en}
-                  data-zh={ch.slogan.zh}
-                  data-i18n={`v-ch-s-${ci}`}
-                >
-                  {ch.slogan.en}
-                </p>
+      {vision.chapters.map((ch, ci) => {
+        const blocks = [
+          { label: { en: "Why this design", zh: "为什么这样设计" }, text: ch.why },
+          { label: { en: "What it solves", zh: "解决的根本问题" }, text: ch.solves },
+          { label: { en: "vs Traditional", zh: "与传统方案的区别" }, text: ch.vs },
+        ];
+        return (
+          <article class="reveal grid items-start gap-10 md:grid-cols-2 md:gap-14">
+            <div class={ci % 2 === 1 ? "md:order-2" : ""}>
+              <div class="flex items-baseline gap-4">
+                <span class="font-mono text-5xl font-extrabold tracking-tight text-cyan-400/30">{ch.no}</span>
+                <div>
+                  <h2 class="text-2xl font-bold tracking-tight text-white sm:text-3xl"
+                    data-en={ch.title.en} data-zh={ch.title.zh} data-i18n={`v-ch-t-${ci}`}>{ch.title.en}</h2>
+                  <p class="mt-1 text-sm font-medium text-cyan-300"
+                    data-en={ch.slogan.en} data-zh={ch.slogan.zh} data-i18n={`v-ch-s-${ci}`}>{ch.slogan.en}</p>
+                </div>
+              </div>
+              <div class="mt-6 space-y-5">
+                {blocks.map((b, bi) => (
+                  <div class="rounded-xl border border-white/5 bg-white/[0.02] p-4">
+                    <p class="font-mono text-[11px] uppercase tracking-widest text-zinc-500"
+                      data-en={b.label.en} data-zh={b.label.zh} data-i18n={`v-ch-b-${ci}-${bi}`}>{b.label.en}</p>
+                    <p class="mt-2 text-sm leading-relaxed text-zinc-300"
+                      data-en={b.text.en} data-zh={b.text.zh} data-i18n={`v-ch-t-${ci}-${bi}`}>{b.text.en}</p>
+                  </div>
+                ))}
               </div>
             </div>
-            <div class="mt-5 space-y-3">
-              {ch.body.en.map((p, pi) => (
-                <p
-                  class="text-base leading-relaxed text-zinc-400"
-                  data-en={ch.body.en[pi]}
-                  data-zh={ch.body.zh[pi]}
-                  data-i18n={`v-ch-b-${ci}-${pi}`}
-                >
-                  {p}
-                </p>
-              ))}
-            </div>
-            <ul class="mt-6 space-y-2.5">
-              {ch.points.en.map((pt, pi) => (
-                <li class="flex items-start gap-2.5 text-sm text-zinc-300">
-                  <span class="mt-0.5 inline-flex size-5 flex-none items-center justify-center rounded-full bg-emerald-400/10 text-emerald-400" aria-hidden="true">✓</span>
-                  <span data-en={ch.points.en[pi]} data-zh={ch.points.zh[pi]} data-i18n={`v-ch-p-${ci}-${pi}`}>
-                    {ch.points.en[pi]}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          </div>
 
-          <!-- Right: mini schematic (per-chapter, zero-dep) -->
-          <div class={ci % 2 === 1 ? "md:order-1" : ""}>
-            <div class="rounded-xl border border-white/5 bg-[#0c0c0f] p-6 font-mono text-[13px] leading-relaxed text-zinc-300">
-              {ci === 0 && (
-                <>
-                  <p class="mb-3 text-[11px] uppercase tracking-widest text-zinc-500">// ai-native hal</p>
-                  <p class="whitespace-pre">type Actuator &#123;</p>
-                  <p class="whitespace-pre text-zinc-400">  servo :: Tensor&lt;3&gt;</p>
-                  <p class="whitespace-pre text-zinc-400">  vfd   :: Tensor&lt;3&gt;</p>
-                  <p class="whitespace-pre text-zinc-400">  io    :: Tensor&lt;N&gt;</p>
-                  <p class="whitespace-pre">&#125;</p>
-                  <p class="mt-3 whitespace-pre text-cyan-300/80">compile(safety_invariants)</p>
-                </>
-              )}
-              {ci === 1 && (
-                <>
-                  <p class="mb-3 text-[11px] uppercase tracking-widest text-zinc-500">// closed-loop world model</p>
-                  <p class="whitespace-pre">state = [</p>
-                  <p class="whitespace-pre text-zinc-400">  perception,       // the world</p>
-                  <p class="whitespace-pre text-zinc-400">  proprioception,   // the body</p>
-                  <p class="whitespace-pre text-zinc-400">  error,            // what came back</p>
-                  <p class="whitespace-pre">].toStream()</p>
-                  <p class="mt-3 whitespace-pre text-cyan-300/80">model(state).self_correct()</p>
-                </>
-              )}
-              {ci === 2 && (
-                <>
-                  <p class="mb-3 text-[11px] uppercase tracking-widest text-zinc-500">// one brain, many bodies</p>
-                  <p class="whitespace-pre">weights = moe(</p>
-                  <p class="whitespace-pre text-zinc-400">  hw_descriptor,     // car | dog</p>
-                  <p class="whitespace-pre text-zinc-400">                     // humanoid | drone</p>
-                  <p class="whitespace-pre">)</p>
-                  <p class="mt-3 whitespace-pre text-cyan-300/80">base.move(weights)</p>
-                </>
-              )}
+            <div class={ci % 2 === 1 ? "md:order-1" : ""}>
+              <div class="rounded-xl border border-white/5 bg-[#0c0c0f] p-6 font-mono text-[13px] leading-relaxed text-zinc-300">
+                {ch.code.map(l => {
+                  const kw = /(type|compile|state|model|weights|moe|base)/.test(l.trim());
+                  return <p class={["whitespace-pre", l.trim().startsWith("//") ? "text-zinc-500" : kw ? "text-cyan-300/90" : "text-zinc-300"].join(" ")}>{l}</p>;
+                })}
+              </div>
             </div>
-          </div>
-        </article>
-      ))}
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  <!-- Validation path -->
+  <section id="verify" class="scroll-mt-24 px-6 pb-20">
+    <div class="landing-layout">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          data-en={vision.verify.title.en} data-zh={vision.verify.title.zh} data-i18n="v-verify-title">{vision.verify.title.en}</h2>
+        <p class="mt-4 text-zinc-400"
+          data-en={vision.verify.subtitle.en} data-zh={vision.verify.subtitle.zh} data-i18n="v-verify-sub">{vision.verify.subtitle.en}</p>
+      </div>
+
+      <div class="reveal mt-12 grid gap-5 md:grid-cols-2">
+        <div class="rounded-xl border border-emerald-400/20 bg-emerald-400/[0.04] p-6">
+          <p class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-emerald-300">
+            <span class="inline-flex size-5 items-center justify-center rounded-full bg-emerald-400/15">✓</span>
+            <span data-en="Verified — simulation / theory" data-zh="已验证——仿真 / 理论" data-i18n="v-verify-sim-h">{vision.verify.sim.en[0]}</span>
+          </p>
+          <ul class="mt-5 space-y-3">
+            {vision.verify.sim.en.map((s, i) => (
+              <li class="flex items-start gap-2.5 text-sm text-zinc-300">
+                <span class="mt-1 inline-flex size-4 flex-none items-center justify-center rounded-full bg-emerald-400/10 text-[10px] text-emerald-400" aria-hidden="true">✓</span>
+                <span data-en={s} data-zh={vision.verify.sim.zh[i] ?? s} data-i18n={`v-verify-sim-${i}`}>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="rounded-xl border border-amber-400/20 bg-amber-400/[0.04] p-6">
+          <p class="flex items-center gap-2 font-mono text-xs uppercase tracking-widest text-amber-300">
+            <span class="inline-flex size-5 items-center justify-center rounded-full bg-amber-400/15">⏳</span>
+            <span data-en="Pending — real hardware" data-zh="待验证——真机" data-i18n="v-verify-real-h">Pending — real hardware</span>
+          </p>
+          <ul class="mt-5 space-y-3">
+            {vision.verify.pending.en.map((s, i) => (
+              <li class="flex items-start gap-2.5 text-sm text-zinc-300">
+                <span class="mt-1 inline-flex size-4 flex-none items-center justify-center rounded-full bg-amber-400/10 text-[10px] text-amber-400" aria-hidden="true">⏳</span>
+                <span data-en={s} data-zh={vision.verify.pending.zh[i] ?? s} data-i18n={`v-verify-real-${i}`}>{s}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </div>
     </div>
   </section>
 
   <!-- CTA -->
   <section class="px-6 pb-32">
     <div class="landing-layout mx-auto max-w-2xl text-center">
-      <p
-        class="text-base leading-relaxed text-zinc-400"
-        data-en={vision.cta.en[0]}
-        data-zh={vision.cta.zh[0]}
-        data-i18n="v-cta"
-      >
-        {vision.cta.en[0]}
-      </p>
-      <a
-        href="/"
-        class="mt-8 inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-8 py-3.5 text-base font-semibold text-[#06202a] transition-all duration-200 motion-ease hover:-translate-y-0.5 hover:bg-cyan-300"
-        data-en={vision.cta.en[1]}
-        data-zh={vision.cta.zh[1]}
-        data-i18n="v-cta-link"
-      >
-        {vision.cta.en[1]}
-        <span aria-hidden="true">→</span>
-      </a>
+      <p class="text-base leading-relaxed text-zinc-400"
+        data-en={vision.cta.en[0]} data-zh={vision.cta.zh[0]} data-i18n="v-cta">{vision.cta.en[0]}</p>
+      <a href="/" class="mt-8 inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-8 py-3.5 text-base font-semibold text-[#06202a] transition-all duration-200 motion-ease hover:-translate-y-0.5 hover:bg-cyan-300"
+        data-en={vision.cta.en[1]} data-zh={vision.cta.zh[1]} data-i18n="v-cta-link">{vision.cta.en[1]}<span aria-hidden="true">→</span></a>
     </div>
   </section>
 
