@@ -33,10 +33,19 @@
 
 /* Faint engineering grid scrim used behind the hero / key sections. */
 .grid-scrim {
+  position: relative;
+  isolation: isolate;
+}
+.grid-scrim::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
   background-image: linear-gradient(rgb(255 255 255 / 0.035) 1px, transparent 1px),
     linear-gradient(90deg, rgb(255 255 255 / 0.035) 1px, transparent 1px);
   background-size: 56px 56px;
   mask-image: radial-gradient(ellipse 80% 70% at 50% 0%, #000 55%, transparent 100%);
+  pointer-events: none;
 }
 
 /* Signature motion curve. */
