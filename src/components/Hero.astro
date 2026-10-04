@@ -2,58 +2,147 @@
 import config from "@/config";
 
 const { landing, landingZh } = config;
+const srcLines = landing.terminalSource.split("\n");
+const srcLinesZh = landingZh.terminalSource.split("\n");
 ---
 
 <section
   id="main-content"
-  class="landing-layout flex min-h-[82svh] flex-col items-center justify-center py-24 text-center"
+  class="grid-scrim relative flex min-h-[92svh] scroll-mt-24 flex-col items-center justify-center overflow-hidden px-6 py-28 text-center"
 >
-  <p
-    class="mb-8 inline-flex items-center gap-2 rounded-full border border-border bg-muted/70 px-5 py-1.5 text-sm font-medium tracking-wide text-accent"
-    data-en={landing.heroEyebrow}
-    data-zh={landingZh.heroEyebrow}
-    data-i18n="hero-eyebrow"
-  >
-    {landing.heroEyebrow}
-  </p>
-  <h1
-    class="max-w-4xl text-5xl font-extrabold leading-[1.05] tracking-tight text-foreground sm:text-7xl"
-    data-en={landing.heroTitle}
-    data-zh={landingZh.heroTitle}
-    data-i18n="hero-title"
-  >
-    {landing.heroTitle}
-  </h1>
-  <p
-    class="mt-8 max-w-3xl text-lg leading-relaxed text-muted-foreground sm:text-xl"
-    data-en={landing.heroSubtitle}
-    data-zh={landingZh.heroSubtitle}
-    data-i18n="hero-sub"
-  >
-    {landing.heroSubtitle}
-  </p>
-  <div class="mt-12 flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
-    <!-- Primary CTA: GitHub -->
-    <a
-      href={landing.githubHref}
-      target="_blank"
-      rel="noopener noreferrer"
-      class="inline-flex items-center justify-center rounded-lg bg-accent px-9 py-3.5 text-base font-semibold text-accent-foreground shadow-sm transition-colors duration-150 hover:bg-accent/85"
-      data-en={landing.heroCtaPrimary}
-      data-zh={landingZh.heroCtaPrimary}
-      data-i18n="hero-cta-primary"
+  <div class="relative mx-auto flex w-full max-w-5xl flex-col items-center">
+    <!-- Breathing badge -->
+    <p
+      class="breathing-badge inline-flex items-center gap-2 rounded-full border border-white/10 bg-white/[0.02] px-5 py-1.5 text-xs font-medium uppercase tracking-[0.18em] text-cyan-400"
+      data-en={landing.heroBadge}
+      data-zh={landingZh.heroBadge}
+      data-i18n="hero-badge"
     >
-      {landing.heroCtaPrimary}
-    </a>
-    <!-- Secondary CTA: About the project -->
-    <a
-      href="#overview"
-      class="inline-flex items-center justify-center rounded-lg border border-border bg-background px-9 py-3.5 text-base font-semibold text-foreground/90 transition-colors duration-150 hover:border-accent/50 hover:text-accent"
-      data-en={landing.heroCtaSecondary}
-      data-zh={landingZh.heroCtaSecondary}
-      data-i18n="hero-cta-secondary"
+      <span class="inline-block size-1.5 rounded-full bg-cyan-400" aria-hidden="true"></span>
+      {landing.heroBadge}
+    </p>
+
+    <!-- Slogan -->
+    <h1
+      class="reveal is-visible mt-9 max-w-5xl text-5xl font-extrabold leading-[1.04] tracking-tight text-white sm:text-7xl"
+      data-en={landing.heroTitle}
+      data-zh={landingZh.heroTitle}
+      data-i18n="hero-title"
     >
-      {landing.heroCtaSecondary}
-    </a>
+      {landing.heroTitle}
+    </h1>
+
+    <!-- Subtitle -->
+    <p
+      class="reveal is-visible mt-7 max-w-2xl text-lg leading-relaxed text-zinc-400 sm:text-xl"
+      data-en={landing.heroSubtitle}
+      data-zh={landingZh.heroSubtitle}
+      data-i18n="hero-sub"
+    >
+      {landing.heroSubtitle}
+    </p>
+
+    <!-- CTA -->
+    <div class="reveal is-visible mt-11 flex flex-col items-center gap-4 sm:flex-row sm:gap-5">
+      <a
+        href="#why"
+        class="inline-flex items-center gap-2 rounded-lg bg-cyan-400 px-8 py-3.5 text-base font-semibold text-[#06202a] transition-all duration-200 motion-ease hover:-translate-y-0.5 hover:bg-cyan-300"
+        data-en={landing.heroCtaPrimary}
+        data-zh={landingZh.heroCtaPrimary}
+        data-i18n="hero-cta-primary"
+      >
+        {landing.heroCtaPrimary}
+        <span aria-hidden="true">→</span>
+      </a>
+      <a
+        href={landing.githubHref}
+        target="_blank"
+        rel="noopener noreferrer"
+        class="inline-flex items-center justify-center rounded-lg border border-white/10 bg-white/[0.02] px-8 py-3.5 text-base font-semibold text-zinc-200 transition-all duration-200 motion-ease hover:-translate-y-0.5 hover:border-cyan-400/40 hover:text-cyan-300"
+        data-en={landing.heroCtaSecondary}
+        data-zh={landingZh.heroCtaSecondary}
+        data-i18n="hero-cta-secondary"
+      >
+        {landing.heroCtaSecondary}
+      </a>
+    </div>
+
+    <!-- Compiler terminal (bunker) -->
+    <div class="reveal mt-16 w-full max-w-2xl">
+      <div
+        data-terminal
+        data-delay="700"
+        class="overflow-hidden rounded-xl border border-white/10 bg-[#0e0e11] shadow-2xl shadow-black/40"
+      >
+        <div class="flex items-center gap-2 border-b border-white/5 bg-white/[0.02] px-4 py-3">
+          <span class="size-3 rounded-full bg-white/10"></span>
+          <span class="size-3 rounded-full bg-white/10"></span>
+          <span class="size-3 rounded-full bg-white/10"></span>
+          <span
+            class="ml-3 font-mono text-xs text-zinc-500"
+            data-en={landing.terminalTitle}
+            data-zh={landingZh.terminalTitle}
+            data-i18n="term-title"
+            >{landing.terminalTitle}</span
+          >
+          <span class="ml-auto font-mono text-[11px] text-zinc-600">zsh</span>
+        </div>
+
+        <div class="px-5 py-5 font-mono text-[13px] leading-relaxed text-zinc-300 sm:text-sm">
+          <div class="flex text-zinc-500">
+            <span class="mr-3 select-none text-cyan-400">{landing.terminalPrompt}</span>
+            <span
+              data-type-line="true"
+              data-text-en={landing.terminalRun}
+              data-text-zh={landingZh.terminalRun}
+              class="whitespace-pre text-zinc-200"
+            ></span>
+          </div>
+
+          {srcLines.map((line, i) => (
+            <div
+              data-type-line="true"
+              data-text-en={line}
+              data-text-zh={srcLinesZh[i] ?? line}
+              class="whitespace-pre pl-6 text-zinc-400"
+            ></div>
+          ))}
+
+          <div class="mt-4 flex items-center gap-2">
+            <span class="mr-3 select-none text-cyan-400">{landing.terminalPrompt}</span>
+            <span
+              data-type-cursor="true"
+              class="term-cursor hidden inline-block h-4 w-2 bg-cyan-400"
+            ></span>
+            <span class="whitespace-pre text-zinc-600">{landing.terminalOk}</span>
+          </div>
+
+          <div
+            data-type-done="true"
+            class="mt-3 flex flex-col gap-1 border-t border-white/5 pt-3 text-zinc-400"
+          >
+            <span
+              class="font-semibold text-emerald-400"
+              data-en={landing.terminalOk}
+              data-zh={landingZh.terminalOk}
+              data-i18n="term-ok"
+              >{landing.terminalOk}</span
+            >
+            <span
+              class="text-xs"
+              data-en={landing.terminalNote}
+              data-zh={landingZh.terminalNote}
+              data-i18n="term-note"
+              >{landing.terminalNote}</span
+            >
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+
+<script>
+  import { initMotion } from "@/scripts/motion";
+  initMotion();
+</script>

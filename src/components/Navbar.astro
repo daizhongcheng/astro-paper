@@ -40,8 +40,8 @@ const { landingNav = true } = Astro.props;
       <button
         type="button"
         data-lang-toggle="en"
-        data-en="EN"
-        data-zh="中文"
+        data-label-en="EN"
+        data-label-zh="中文"
         aria-pressed="true"
         class="rounded-full px-3 py-1 transition-colors duration-150 hover:text-accent"
       >
@@ -103,7 +103,7 @@ const { landingNav = true } = Astro.props;
 </header>
 
 <script>
-  import { initI18n, setLanguage } from "@/utils/i18n";
+  import { initI18n, toggleLanguage } from "@/utils/i18n";
 
   function bindI18n() {
     // Bind toggle buttons & init language.
@@ -111,8 +111,8 @@ const { landingNav = true } = Astro.props;
       if ((btn as any).__bound) return;
       (btn as any).__bound = true;
       btn.addEventListener("click", () => {
-        const lang = btn.getAttribute("data-lang-toggle") === "zh" ? "zh" : "en";
-        setLanguage(lang);
+        // True toggle: flip based on current state, not a static attribute.
+        toggleLanguage();
       });
     });
     initI18n();

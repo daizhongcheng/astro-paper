@@ -62,6 +62,17 @@ export function setLanguage(lang: "en" | "zh") {
   applyLanguage(lang);
 }
 
+/**
+ * Toggle between zh <-> en based on the *current* state.
+ * Relies on the live `document.documentElement.dataset.lang`, so every click
+ * flips the language (en->zh or zh->en) and persists the new value.
+ */
+export function toggleLanguage(): "en" | "zh" {
+  const next: "en" | "zh" = getLanguage() === "zh" ? "en" : "zh";
+  applyLanguage(next);
+  return next;
+}
+
 export function getLanguage(): "en" | "zh" {
   return document.documentElement.dataset.lang === "zh" ? "zh" : "en";
 }

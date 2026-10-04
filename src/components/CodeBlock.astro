@@ -1,0 +1,35 @@
+---
+interface Props {
+  code: string;
+  lang?: string;
+  filename?: string;
+}
+const { code, lang = "ts", filename = "code.ts" } = Astro.props;
+const lines = code.split("\n");
+
+const isComment = (l: string) => l.trimStart().startsWith("//");
+const isKwd = (l: string) => /^\s*(const|fn|let|if|return|export|import)\b/.test(l);
+---
+
+<div class="code-block overflow-hidden rounded-xl border border-white/5 bg-[#0c0c0f] text-left">
+  <div class="flex items-center justify-between border-b border-white/5 bg-white/[0.02] px-4 py-2">
+    <span class="font-mono text-xs text-zinc-500">{filename}</span>
+    <span class="rounded bg-white/5 px-2 py-0.5 font-mono text-[10px] uppercase tracking-wider text-zinc-400">{lang}</span>
+  </div>
+  <pre class="overflow-x-auto px-0 py-4 font-mono text-[13px] leading-relaxed">
+    {lines.map((l, i) => (
+      <div class="flex whitespace-pre">
+        <span class="w-10 flex-none select-none pr-4 text-right text-zinc-700/70">{i + 1}</span>
+        <span
+          class={isComment(l)
+            ? "text-zinc-500"
+            : isKwd(l)
+              ? "text-cyan-300/90"
+              : "text-zinc-300"}
+        >
+          {l}
+        </span>
+      </div>
+    ))}
+  </pre>
+</div>

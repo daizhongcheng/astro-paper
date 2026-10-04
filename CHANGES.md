@@ -2,6 +2,24 @@
 
 > 记录按时间倒序排列，最新改动在最上方。每次改动追加在文件顶部，不覆盖历史。
 
+## 2026-10-04 — `main`
+
+**改动概述：** 首页整体重构为深色"编译器"叙事风格，并修复 i18n 语言切换单向失效 Bug。
+
+**修复：**
+- 语言切换由"读取按钮静态属性"改为"基于当前语言反向 toggle"（`toggleLanguage()`），连续反复点击与刷新后状态保持均稳定。
+
+**首页重构（暗色 · Design-Engineer 风）：**
+- 设计 Token：背景 `#0A0A0B` 深蓝黑 + 极淡网格底纹；正文 `zinc-400`，强调荧光青 `cyan-400`；卡片 `rounded-xl` / `border-white/5` / `bg-white/[0.02]`；动效 `cubic-bezier(0.16,1,0.3,1)`。
+- Hero：呼吸灯 Badge + 5 级大标题（`text-5xl md:text-7xl`）+ 防空洞编译器 Terminal（打字机：LLM 代码 → DYNPHI 拦截 → `✓ Build Success`）。
+- Why 区：Bento Grid（`md:auto-rows-[200px]`）——红色未校验代码卡、绿色约束清单卡、99.9% 拦截率、2ms 编译延迟两张数字卡。
+- What 区：Z 字形左右交替三产品（Runtime / Analyzer / Platform），左文右带语法高亮 CodeBlock（行号 + 注释/关键字着色）。
+- How 区：垂直 4 步编译流水线（符号解析 → 物理编译 → 沙盒推演 → 现实下发），节点渐变虚线连接。
+- 微交互（无第三方依赖）：IntersectionObserver 滚动揭示（Fade up + Blur）、卡片鼠标跟随边缘光晕、数字滚动动画、终端打字机。
+- 导航锚点更新：Overview/Products/Tech Stack → Why / What / How / About。
+
+**影响范围：** `src/utils/i18n.ts`（新增 toggleLanguage）、`src/components/Navbar.astro`（toggle 回调 + 按钮 label）、`src/styles/theme.css`（深色 Token + 动画）、`src/scripts/motion.ts`（新增交互脚本）、`src/components/{Hero,WhyBento,WhatDX,HowPipeline,CodeBlock}.astro`（新首页区块）、`src/pages/index.astro`（组装）、`astro-paper.config.ts` / `src/config.ts` / `src/types/config.ts`（新增首页区块中英文文案与类型）。
+
 ## 2026-10-04 \u2014 `main`\u200b\u200b
 
 **改动概述：** 三个产品卡片改为整卡可点，分别跳转到三套独立博客栏目；建立三套彼此隔离的博客系统（代码分析 / 物理 AI / Agent），各含列表页与文章详情页，用户可按栏目写文章。

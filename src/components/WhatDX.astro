@@ -1,0 +1,88 @@
+---
+import config from "@/config";
+import CodeBlock from "@/components/CodeBlock.astro";
+
+const { landing, landingZh } = config;
+const items = landing.whatItems;
+const itemsZh = landingZh.whatItems;
+---
+
+<section id="what" class="scroll-mt-24 px-6 py-28">
+  <div class="landing-layout">
+    <!-- headline -->
+    <div class="reveal mx-auto max-w-2xl text-center">
+      <p
+        class="text-xs font-semibold uppercase tracking-[0.2em] text-cyan-400"
+        data-en={landing.whatTitle}
+        data-zh={landingZh.whatTitle}
+        data-i18n="what-no"
+      >
+        {landing.whatTitle}
+      </p>
+      <h2
+        class="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl"
+        data-en={landing.whatSubtitle}
+        data-zh={landingZh.whatSubtitle}
+        data-i18n="what-headline"
+      >
+        {landing.whatSubtitle}
+      </h2>
+    </div>
+
+    <!-- Z-shaped alternating rows -->
+    <div class="mt-16 flex flex-col gap-20">
+      {items.map((item, i) => {
+        const zh = itemsZh[i] ?? item;
+        const flip = i % 2 === 1;
+        return (
+          <div class="reveal grid items-center gap-10 md:grid-cols-2 md:gap-14">
+            <!-- Text -->
+            <div class={flip ? "md:order-2" : "md:order-1"}>
+              <div class="flex items-center gap-3">
+                <span
+                  class="inline-flex items-center rounded-md border border-white/10 bg-white/[0.03] px-2.5 py-1 font-mono text-[11px] uppercase tracking-wider text-zinc-400"
+                  data-en={landing.whatTagBuild}
+                  data-zh={landingZh.whatTagBuild}
+                  data-i18n={`what-tag-${i}`}
+                >
+                  {landing.whatTagBuild}
+                </span>
+                <span class="inline-flex items-center gap-1.5 font-mono text-[11px] text-cyan-400/80">
+                  <span class="size-1 rounded-full bg-cyan-400" aria-hidden="true"></span>
+                  <span data-en={item.tech} data-zh={zh.tech} data-i18n={`what-tech-${i}`}>
+                    {item.tech}
+                  </span>
+                </span>
+              </div>
+              <h3
+                class="mt-5 text-2xl font-bold tracking-tight text-white sm:text-3xl"
+                data-en={item.title}
+                data-zh={zh.title}
+                data-i18n={`what-title-${i}`}
+              >
+                {item.title}
+              </h3>
+              <p
+                class="mt-4 max-w-md text-base leading-relaxed text-zinc-400"
+                data-en={item.caption}
+                data-zh={zh.caption}
+                data-i18n={`what-cap-${i}`}
+              >
+                {item.caption}
+              </p>
+            </div>
+
+            <!-- Code -->
+            <div class={flip ? "md:order-1" : "md:order-2"}>
+              <CodeBlock
+                code={item.code}
+                lang="ts"
+                filename="dynphi"
+              />
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>

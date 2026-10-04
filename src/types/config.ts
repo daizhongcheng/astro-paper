@@ -179,6 +179,44 @@ interface LandingContent {
   skipToContent: string;
   navA11y: string;
   gitHubA11y: string;
+  /** -------- Dark "compiler" homepage sections (new) -------- */
+  heroBadge: string;
+  terminalTitle: string;
+  terminalPrompt: string;
+  terminalSource: string;
+  terminalOk: string;
+  terminalNote: string;
+  terminalRun: string;
+  whyTitle: string;
+  whySubtitle: string;
+  whyDilemmaTitle: string;
+  whyDilemmaDesc: string;
+  whyDilemmaCode: string;
+  whyConstraintTitle: string;
+  whyConstraintDesc: string;
+  whyConstraintPoints: string[];
+  whyMetric1Value: string;
+  whyMetric1Label: string;
+  whyMetric1Caption: string;
+  whyMetric2Value: string;
+  whyMetric2Label: string;
+  whyMetric2Caption: string;
+  whatTitle: string;
+  whatSubtitle: string;
+  whatTagBuild: string;
+  whatItems: {
+    title: string;
+    tech: string;
+    caption: string;
+    code: string;
+  }[];
+  howTitle: string;
+  howSubtitle: string;
+  howTag: string;
+  howSteps: {
+    title: string;
+    desc: string;
+  }[];
 }
 
 interface AstroPaperConfig {

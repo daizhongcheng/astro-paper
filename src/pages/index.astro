@@ -2,28 +2,26 @@
 import Layout from "@/layouts/Layout.astro";
 import Navbar from "@/components/Navbar.astro";
 import Hero from "@/components/Hero.astro";
-import Overview from "@/components/Overview.astro";
-import ProductCards from "@/components/ProductCards.astro";
-import TechStack from "@/components/TechStack.astro";
-import GitHubCta from "@/components/GitHubCta.astro";
+import WhyBento from "@/components/WhyBento.astro";
+import WhatDX from "@/components/WhatDX.astro";
+import HowPipeline from "@/components/HowPipeline.astro";
 import About from "@/components/About.astro";
 import Footer from "@/components/Footer.astro";
 import config from "@/config";
 
-const { landing, landingZh } = config;
+const { landing } = config;
 ---
 
 <Layout
-  title={`${landing.brand} — Physics-First AI | ${landing.heroTitle}`}
-  description="Physics-first AI company. DYNPHI encodes deterministic physical equations into models to eliminate physics hallucination at the source."
+  title={`${landing.brand} — Compile Physical Laws. Sustain Intelligent Agents.`}
+  description="DYNPHI is a compiler layer for AI — compiling the laws of physics directly into intelligent agents."
 >
   <Navbar />
   <main id="main" class="flex-1">
     <Hero />
-    <Overview />
-    <ProductCards />
-    <TechStack />
-    <GitHubCta />
+    <WhyBento />
+    <WhatDX />
+    <HowPipeline />
     <About />
   </main>
   <Footer />
@@ -34,12 +32,12 @@ const { landing, landingZh } = config;
     // Simple document-title / description swap on language change.
     const seo = {
       en: {
-        title: `${document.title}`,
-        desc: "Physics-first AI company. DYNPHI encodes deterministic physical equations into models to eliminate physics hallucination at the source.",
+        title: `DYNPHI — Compile Physical Laws. Sustain Intelligent Agents.`,
+        desc: "DYNPHI is a compiler layer for AI — compiling the laws of physics directly into intelligent agents.",
       },
       zh: {
-        title: "DYNPHI — 物理优先的 AI 公司",
-        desc: "DYNPHI 是一家以物理为先的 AI 公司，把确定性的物理方程编码进模型，从源头消除物理幻觉。",
+        title: "DYNPHI — 编译物理律，承载智能体",
+        desc: "DYNPHI 是连接符号推理与物理现实的编译层基础设施——以编译器级精度，把物理定律直接编译进智能体。",
       },
     };
 
