@@ -16,6 +16,39 @@ const vision = {
     en: "DYNPHI is not a feature set. It is a set of architectural decisions — about where the laws of physics live, where the hardware boundary sits, and how a model closes the loop with what actually happened. Each decision below explains why we designed it this way, what fundamental problem it solves, and how it differs from the established stack.",
     zh: "DYNPHI 不是一组功能，而是一组架构决策——关于物理定律活在何处、硬件边界落在哪里、模型如何与实际发生的结果闭环。下面的每一条，都会说明我们为何这样设计、解决了什么根本问题、又与既有技术栈有何本质区别。",
   },
+  overview: {
+    title: { en: "Architecture Overview", zh: "架构总览" },
+    subtitle: {
+      en: "Three signal streams converge into one tokenised flow, pass through a single adaptive brain, and land on hardware through an AI-native HAL.",
+      zh: "三路信号汇聚为一条 Token 流，经过同一个自适应大脑，再经由 AI 原生 HAL 落到硬件。",
+    },
+    inputs: {
+      label: { en: "Signal inputs", zh: "信号输入" },
+      items: [
+        { en: "Perception", zh: "外部感知" },
+        { en: "Proprioception", zh: "本体感知" },
+        { en: "Control error", zh: "控制误差" },
+      ],
+    },
+    token: { en: "Tokenised stream", zh: "Token 流" },
+    brain: {
+      title: { en: "Single brain — MoE · Hyper-network · Adapter", zh: "单一大脑 — MoE · 超网络 · Adapter" },
+      sub: { en: "run-time weight switch, driven by the hardware descriptor", zh: "运行时按硬件描述符切换权重" },
+    },
+    hal: {
+      title: { en: "AI-Native HAL", zh: "AI 原生 HAL" },
+      sub: { en: "tensor contract + safety engine, compiled in", zh: "张量契约 + 安全约束引擎（编译进接口）" },
+    },
+    bodies: {
+      label: { en: "One brain, many bodies", zh: "一脑多体" },
+      items: [
+        { en: "Car", zh: "车" },
+        { en: "Quadruped", zh: "四足" },
+        { en: "Humanoid", zh: "人形" },
+        { en: "Drone", zh: "无人机" },
+      ],
+    },
+  },
   compare: {
     title: { en: "How the Stack Differs", zh: "与既有技术栈的差异" },
     subtitle: {
@@ -165,6 +198,71 @@ const vision = {
         data-en={vision.tagline.en} data-zh={vision.tagline.zh} data-i18n="v-tagline">{vision.tagline.en}</p>
       <p class="mt-8 max-w-2xl text-base leading-relaxed text-zinc-400"
         data-en={vision.intro.en} data-zh={vision.intro.zh} data-i18n="v-intro">{vision.intro.en}</p>
+    </div>
+  </section>
+
+  <!-- Architecture overview (data-flow diagram) -->
+  <section id="overview" class="scroll-mt-24 px-6 pb-20">
+    <div class="landing-layout">
+      <div class="reveal mx-auto max-w-2xl text-center">
+        <h2 class="text-3xl font-bold tracking-tight text-white sm:text-4xl"
+          data-en={vision.overview.title.en} data-zh={vision.overview.title.zh} data-i18n="v-ov-title">{vision.overview.title.en}</h2>
+        <p class="mt-4 text-zinc-400"
+          data-en={vision.overview.subtitle.en} data-zh={vision.overview.subtitle.zh} data-i18n="v-ov-sub">{vision.overview.subtitle.en}</p>
+      </div>
+
+      <div class="reveal mx-auto mt-12 max-w-3xl">
+        <!-- signal inputs -->
+        <p class="mb-3 text-center font-mono text-[11px] uppercase tracking-widest text-zinc-500"
+          data-en={vision.overview.inputs.label.en} data-zh={vision.overview.inputs.label.zh} data-i18n="v-ov-in-label">{vision.overview.inputs.label.en}</p>
+        <div class="grid gap-3 sm:grid-cols-3">
+          {vision.overview.inputs.items.map((it, i) => (
+            <div class="rounded-lg border border-white/10 bg-white/[0.02] px-4 py-3 text-center text-sm font-medium text-zinc-200">
+              <span data-en={it.en} data-zh={it.zh} data-i18n={`v-ov-in-${i}`}>{it.en}</span>
+            </div>
+          ))}
+        </div>
+
+        <div class="my-2 flex justify-center text-cyan-400/70" aria-hidden="true">↓</div>
+
+        <!-- token stream -->
+        <div class="rounded-xl border border-cyan-400/20 bg-cyan-400/[0.04] px-4 py-3 text-center text-sm font-semibold text-cyan-200">
+          <span data-en={vision.overview.token.en} data-zh={vision.overview.token.zh} data-i18n="v-ov-token">{vision.overview.token.en}</span>
+        </div>
+
+        <div class="my-2 flex justify-center text-cyan-400/70" aria-hidden="true">↓</div>
+
+        <!-- single brain -->
+        <div class="rounded-xl border border-cyan-400/30 bg-cyan-400/[0.06] px-4 py-4 text-center">
+          <p class="text-base font-bold text-white"
+            data-en={vision.overview.brain.title.en} data-zh={vision.overview.brain.title.zh} data-i18n="v-ov-brain">{vision.overview.brain.title.en}</p>
+          <p class="mt-1 text-xs text-zinc-400"
+            data-en={vision.overview.brain.sub.en} data-zh={vision.overview.brain.sub.zh} data-i18n="v-ov-brain-sub">{vision.overview.brain.sub.en}</p>
+        </div>
+
+        <div class="my-2 flex justify-center text-cyan-400/70" aria-hidden="true">↓</div>
+
+        <!-- HAL -->
+        <div class="rounded-xl border border-white/10 bg-white/[0.02] px-4 py-4 text-center">
+          <p class="text-base font-bold text-white"
+            data-en={vision.overview.hal.title.en} data-zh={vision.overview.hal.title.zh} data-i18n="v-ov-hal">{vision.overview.hal.title.en}</p>
+          <p class="mt-1 text-xs text-zinc-400"
+            data-en={vision.overview.hal.sub.en} data-zh={vision.overview.hal.sub.zh} data-i18n="v-ov-hal-sub">{vision.overview.hal.sub.en}</p>
+        </div>
+
+        <div class="my-2 flex justify-center text-cyan-400/70" aria-hidden="true">↓</div>
+
+        <!-- bodies -->
+        <p class="mb-3 text-center font-mono text-[11px] uppercase tracking-widest text-zinc-500"
+          data-en={vision.overview.bodies.label.en} data-zh={vision.overview.bodies.label.zh} data-i18n="v-ov-body-label">{vision.overview.bodies.label.en}</p>
+        <div class="grid grid-cols-2 gap-3 sm:grid-cols-4">
+          {vision.overview.bodies.items.map((it, i) => (
+            <div class="rounded-lg border border-white/10 bg-white/[0.03] px-4 py-3 text-center text-sm font-semibold text-zinc-200">
+              <span data-en={it.en} data-zh={it.zh} data-i18n={`v-ov-body-${i}`}>{it.en}</span>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   </section>
 
