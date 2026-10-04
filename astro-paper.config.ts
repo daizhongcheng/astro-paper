@@ -271,7 +271,7 @@ export default defineAstroPaperConfig({
     terminalTitle: "dynphi",
     terminalPrompt: "$",
     terminalSource:
-      "fn move_arm(target: Vec3) -> Trajectory {\n  let plan = llm.plan(\"reach target\");\n  // intercepted by DYNPHI\n  return plan;\n}",
+      "// 神经网络前向\nlet h = relu(W1 @ x + b1);\nlet logits = W2 @ h + b2;\nlet y = softmax(logits);\n\n// 反向传播——符号梯度\n∂L/∂W2 = (y − t)ᵀ · h\n∂L/∂W1 = (W2ᵀ · (y − t)) ⊙ relu′(h)\n\n// DYNPHI 拦截——用物理约束取代统计猜测\nlet τ = J⁻¹(θ) · f_ext;   // 逆动力学\ncheck |τ| ≤ τ_max;        // 力矩上限\ncheck p ∉ obstacle;       // 避碰\n→ dispatch(plan)   // 编译下发",
     terminalOk: "✓ 构建成功",
     terminalNote:
       "已注入 157 条确定性约束 · 沙盒已验证 · 0 幻觉",

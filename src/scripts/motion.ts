@@ -121,7 +121,7 @@ function bindTerminals() {
           clearInterval(iv);
           cb();
         }
-      }, 14);
+      }, 9);
       void i;
     };
 
