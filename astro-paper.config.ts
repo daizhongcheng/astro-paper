@@ -115,7 +115,7 @@ export default defineAstroPaperConfig({
     terminalTitle: "dynphi",
     terminalPrompt: "$",
     terminalSource:
-      "fn move_arm(target: Vec3) -> Trajectory {\n  let plan = llm.plan(\"reach target\");\n  // intercepted by DYNPHI\n  return plan;\n}",
+      "// neural forward pass\nlet h = relu(W1 @ x + b1);\nlet logits = W2 @ h + b2;\nlet y = softmax(logits);\n\n// backprop — symbolic gradients\n∂L/∂W2 = (y − t)ᵀ · h\n∂L/∂W1 = (W2ᵀ · (y − t)) ⊙ relu′(h)\n\n// DYNPHI intercept — physics over statistical guess\nlet τ = J⁻¹(θ) · f_ext;   // inverse dynamics\ncheck |τ| ≤ τ_max;        // torque limit\ncheck p ∉ obstacle;       // collision-free\n→ dispatch(plan)",
     terminalOk: "✓ Build Success",
     terminalNote:
       "157 deterministic constraints injected · Verified by sandbox · 0 hallucinations",

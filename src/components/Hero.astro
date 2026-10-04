@@ -67,13 +67,9 @@ const srcLinesZh = landingZh.terminalSource.split("\n");
       </a>
     </div>
 
-    <!-- Compiler terminal (bunker) -->
-    <div class="reveal is-visible mt-12 w-full max-w-2xl">
-      <div
-        data-terminal
-        data-delay="250"
-        class="overflow-hidden rounded-xl border border-white/10 bg-[#0e0e11] shadow-2xl shadow-black/40"
-      >
+    <!-- Compiler terminal (static, always visible) -->
+    <div class="mt-12 w-full max-w-2xl">
+      <div class="overflow-hidden rounded-xl border border-white/10 bg-[#0e0e11] shadow-2xl shadow-black/40">
         <div class="flex items-center gap-2 border-b border-white/5 bg-white/[0.02] px-4 py-3">
           <span class="size-3 rounded-full bg-white/10"></span>
           <span class="size-3 rounded-full bg-white/10"></span>
@@ -89,38 +85,33 @@ const srcLinesZh = landingZh.terminalSource.split("\n");
         </div>
 
         <div class="px-5 py-5 font-mono text-[15px] leading-relaxed text-white sm:text-base">
-          <div class="flex text-zinc-500">
-            <span class="mr-3 select-none text-cyan-400">{landing.terminalPrompt}</span>
+          <div>
+            <span class="select-none text-cyan-400">{landing.terminalPrompt} </span>
             <span
-              data-type-line="true"
-              data-text-en={landing.terminalRun}
-              data-text-zh={landingZh.terminalRun}
-              class="whitespace-pre text-zinc-100"
-            ></span>
+              class="whitespace-pre"
+              data-en={landing.terminalRun}
+              data-zh={landingZh.terminalRun}
+              data-i18n="term-run"
+              >{landing.terminalRun}</span
+            >
           </div>
 
           {srcLines.map((line, i) => (
             <div
-              data-type-line="true"
-              data-text-en={line}
-              data-text-zh={srcLinesZh[i] ?? line}
-              class="whitespace-pre pl-6 text-white"
-            ></div>
+              class="whitespace-pre pl-6"
+              data-en={line}
+              data-zh={srcLinesZh[i] ?? line}
+              data-i18n={`term-src-${i}`}
+              >{line}</div
+            >
           ))}
 
           <div class="mt-4 flex items-center gap-2">
-            <span class="mr-3 select-none text-cyan-400">{landing.terminalPrompt}</span>
-            <span
-              data-type-cursor="true"
-              class="term-cursor hidden inline-block h-4 w-2 bg-cyan-400"
-            ></span>
-            <span class="whitespace-pre text-zinc-600">{landing.terminalOk}</span>
+            <span class="select-none text-cyan-400">{landing.terminalPrompt} </span>
+            <span class="term-cursor inline-block h-4 w-2 bg-cyan-400"></span>
           </div>
 
-          <div
-            data-type-done="true"
-            class="mt-3 flex flex-col gap-1 border-t border-white/5 pt-3 text-zinc-400"
-          >
+          <div class="mt-3 flex flex-col gap-1 border-t border-white/5 pt-3">
             <span
               class="font-semibold text-emerald-400"
               data-en={landing.terminalOk}
@@ -129,7 +120,7 @@ const srcLinesZh = landingZh.terminalSource.split("\n");
               >{landing.terminalOk}</span
             >
             <span
-              class="text-xs"
+              class="text-xs text-zinc-400"
               data-en={landing.terminalNote}
               data-zh={landingZh.terminalNote}
               data-i18n="term-note"
