@@ -44,7 +44,7 @@ export default defineAstroPaperConfig({
     heroEyebrow: "Compile × Physics",
     heroTitle: "Compile Physical Laws. Sustain Intelligent Agents.",
     heroSubtitle:
-      "Compiler-grade precision that bridges symbolic reasoning and physical reality.",
+      "Compile physics at design time; adapt to any body at run time.",
     heroCtaPrimary: "Read the story",
     heroCtaSecondary: "View on GitHub",
     overviewTitle: "The Soul of Physics AI",
@@ -103,6 +103,7 @@ export default defineAstroPaperConfig({
     aboutParagraphs: [
       "DYNPHI is a physics-first AI company — the union of Dynamic and Physics — with a mission to encode deterministic physical laws into AI's 'intuition'.",
       "We champion openness and first principles: code open-sourced to the community, methods shared with peers.",
+      "A single brain, ready for every body.",
     ],
     footerTagline: "Compile physical laws. Sustain intelligent agents.",
     contactLabel: "Contact",
@@ -201,12 +202,13 @@ export default defineAstroPaperConfig({
       { label: "为什么", href: "#why" },
       { label: "是什么", href: "#what" },
       { label: "如何做", href: "#how" },
+      { label: "愿景", href: "/vision" },
       { label: "关于", href: "#about" },
     ],
     heroEyebrow: "编译 × 物理",
     heroTitle: "编译物理律，承载智能体",
     heroSubtitle:
-      "以编译器级精度，弥合符号推理与物理现实的鸿沟。",
+      "设计期编译物理，运行期驾驭任意躯体。",
     heroCtaPrimary: "阅读故事",
     heroCtaSecondary: "访问 GitHub",
     overviewTitle: "物理 AI 的灵魂",
@@ -257,6 +259,7 @@ export default defineAstroPaperConfig({
     aboutParagraphs: [
       "DYNPHI 是一家物理 AI 公司——Dynamic 与 Physics 的结合。使命是把确定性的物理规律，编码进 AI 的『直觉』里。",
       "我们崇尚开放与第一性原理：代码向社区开源，方法向同行公开。",
+      "一颗大脑，适配每一副躯体。",
     ],
     footerTagline: "编译物理律，承载智能体。",
     contactLabel: "联系我们",
